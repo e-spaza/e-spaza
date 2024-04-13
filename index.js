@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -7,6 +8,12 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static('dist'));
 app.use(cors());
+
+const uri = 'mongodb+srv://menzishazi6:N3T1Gogzx48LQDVX@cluster0.5rog0cg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB Atlas'))
+    .catch(err => console.error('Could not connect to MongoDB Atlas', err));
 
 // Define a User class or object constructor
 class User {
