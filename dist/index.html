@@ -1,11 +1,73 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>E-Spaza</title>
 </head>
 <body>
-    <h1>Hello, world!</h1>
+    <header>
+        <h1 style="color:brown">Lucky's Spaza</h1>
+
+    </header>
+    <main class="container" id="container">
+
+        <section class="form-container sign-up">
+
+            <form>
+                <h2>Create Account</h2>
+                <section class="social-login">
+                   <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="485901762474-nm7dep9v3hvh38tsgqokeilta00j2r89.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+                </section>
+                <input type="text" placeholder="Name">
+                <input type="text" placeholder="Surname">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <button>Sign Up</button>
+            </form>
+        </section>
+        <section class="form-container sign-in">
+        
+            <form>
+                <h2>Sign In</h2>
+                <section class="social-login">
+                    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+         data-client_id="485901762474-nm7dep9v3hvh38tsgqokeilta00j2r89.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+                </section>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <a href="#">Forgot Your Password?</a>
+                <button>Sign In</button>
+            </form>
+        </section>
+        <aside class="toggle-container">
+             <aside class="toggle">
+                 <section class="toggle-panel toggle-left">
+                        <h2>Welcome Back!</h2>
+                        <p>Got an Account?</p>
+                        <button class="hidden" id="login">Sign In</button>
+                 </section>
+                 <section class="toggle-panel toggle-right">
+                        <h2>Hello, Friend!</h2>
+                        <p>Don't have an account?</p>
+                        <button class="hidden" id="register">Sign Up</button>
+                 </section>
+        </aside>
+    </aside>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
+
