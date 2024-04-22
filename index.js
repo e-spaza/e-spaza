@@ -8,44 +8,73 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static('dist'));
 app.use(cors());
+app.use(express.json());
 
-const uri = 'mongodb+srv://menzishazi6:N3T1Gogzx48LQDVX@cluster0.5rog0cg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const uri = 'mongodb+srv://2453308:Yb1umhk4vs90ZTul@e-spaza.5i4gfc5.mongodb.net/?retryWrites=true&w=majority&appName=e-spaza';
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error('Could not connect to MongoDB Atlas', err));
 
-// Define a User class or object constructor
-class User {
-    constructor(id, username, email, password, role) {
-        this.id = id; // Unique identifier for the user
-        this.username = username; // User's username
-        this.email = email; // User's email address
-        this.password = password; // Hashed password for security
-        this.role = role; // User's role (e.g., 'admin', 'user')
-    }
-
-    // Method to check if the user has a certain role
-    hasRole(role) {
-        return this.role === role;
-    }
-
-    // Method to update user information
-    updateProfile(username, email, password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-}
-
 //route for login information
 app.get('/login', (req, res) => {
-    
+
 });
 
 //route for admininstration
 app.get('/admin', (req, res) => {
-    
+
+});
+
+const userSchema = new mongoose.Schema({
+    id: String,
+    name: String,
+    surname: String,
+    email: String,
+})
+
+const User = mongoose.model('User', userSchema)
+
+//route for user signup post
+//route for user signup post
+app.post('/signup', (req, res) => {
+    // Check if user already exists
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if (user) {
+                res.status(400).send('User already exists');
+            } else {
+                // If user does not exist, save new user
+                const newUser = new User(req.body);
+                newUser
+                    .save()
+                    .then(result => {
+                        res.status(201).json(result);
+                    })
+                    .catch(err => {
+                        res.status(500).send('Server error');
+                    });
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});
+
+//route for user login post, send an error if user does not exist
+app.post('/login', (req, res) => {
+    // Check if user exists
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if (!user) {
+                res.status(400).send('User does not exist');
+            } else {
+                res.status(200).json(user);
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
 });
 
 app.listen(port, () => {
