@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "cross-env NODE_ENV=test jest --testTimeout=5000",
     "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.19.2",
-    "mongoose": "^8.3.1"
+    "mongoose": "^8.3.1",
+    "supertest": "^6.3.4"
   },
   "devDependencies": {
     "jest": "^29.7.0"
