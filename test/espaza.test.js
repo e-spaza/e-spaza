@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-// Define a Mongoose model named 'User' with a schema specifying the structure of user documents
+// Define a Mongoose model with a schema specifying the structure of user documents
 const User = mongoose.model('User', new mongoose.Schema({
     id: String,
     name: String,
@@ -13,7 +13,7 @@ const User = mongoose.model('User', new mongoose.Schema({
     email: String,
 }));
 
-// Connecting to the database before each test
+// Connecting to the database before all tests
 beforeAll(async () => {
     try {
         await mongoose.connect("mongodb+srv://2453308:Yb1umhk4vs90ZTul@e-spaza.5i4gfc5.mongodb.net/?retryWrites=true&w=majority&appName=e-spaza");
@@ -24,7 +24,7 @@ beforeAll(async () => {
     }
 });
 
-// Closing database connection after each test
+// Closing database connection after all tests
 afterAll(async () => {
     try {
         await mongoose.connection.close();
@@ -35,7 +35,7 @@ afterAll(async () => {
     }
 });
 
-// Define the routes for user signup
+// Define the route for user signup
 app.post('/signup', async (req, res) => {
     try {
         const existingUser = await User.findOne({ email: req.body.email });
@@ -60,7 +60,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Define the routes for user login
+// Define the route for user login
 app.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
