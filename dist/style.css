@@ -271,7 +271,7 @@ Hero Area
 
 .center .right img.img1 {
   width: 85%;
-  right: -25%;
+  right: -40%;
   bottom: -50%;
 }
 
@@ -307,7 +307,7 @@ Hero Media Query
   }
 
   .center .right img.img1 {
-    width: 90%;
+    width: 80%;
   }
 
   .center .right img.img2 {
