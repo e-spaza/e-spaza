@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const request = require("supertest");
 const express = require("express");
+const config = require("../utils/config")
 
 const app = express();
 app.use(express.json());
@@ -16,7 +17,7 @@ const User = mongoose.model('User', new mongoose.Schema({
 // Connecting to the database before all tests
 beforeAll(async () => {
     try {
-        await mongoose.connect("mongodb+srv://2453308:Yb1umhk4vs90ZTul@e-spaza.5i4gfc5.mongodb.net/?retryWrites=true&w=majority&appName=e-spaza");
+        await mongoose.connect(config.uri);
     } catch (error) {
         console.error("MongoDB connection error:", error);
         // Exit the test suite if MongoDB connection fails
