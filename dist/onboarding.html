@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+    <!-- Custom StyleSheet -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Onboarding</title>
+</head>
+<body>
+    <body>
+        <nav class="navbarOnboard">
+            <a href="#" class="nav-linkOnboard nav-title">E-spaza</a>
+            <div class="nav-links">
+                <a href="#inventory" class="nav-linkOnboard">Inventory</a>
+                <a href="#orders" class="nav-linkOnboard">Orders</a>
+                <a href="#communication" class="nav-linkOnboard">Communication</a>
+                <a href="#user-management" class="nav-linkOnboard">User Management</a>
+            </div>
+        </nav>
+        <div class="containerOnboard">
+            <div class="columnOnboard column-1Onboard"></div>
+            <div class="columnOnboard column-4Onboard">
+                <form class="onboard-form">
+                    <input type="text" name="name" placeholder="Full Name" class="inputOnboard" required>
+                    <input type="email" name="email" placeholder="Email" class="inputOnboard" required>
+                    <input type="text" name="role" placeholder="Role" class="inputOnboard" required>
+                    <input type="text" name="permission" placeholder="Permission" class="inputOnboard" required>
+                    <button type="submit" class="submit-button">Submit</button>
+                </form>
+                <div class="access-sectionOnboard">
+                    <h2>Remove Access</h2>
+                    <div class="entryOnboard">
+                        <div class="entry-nameOnboard">
+                            <label for="nameSearch" class="nameOnboard">Full Name</label>
+                            <input type="search" id="nameSearch" name="nameSearch" class="nameOnboard">
+                
+                            <label for="roleSearch" class="roleOnboard">Role</label>
+                            <input type="search" id="roleSearch" name="roleSearch" class="roleOnboard">
+                        </div>
+                        <button class="remove-accessOnboard">Remove Access</button>
+                    </div>
+                </div>
+                
+                <div class="permissions-sectionOnboard">
+                    <h2>Change Permissions</h2>
+                    <div class="entryOnboard">
+                        <div class="entry-nameOnboard">
+                            <label for="nameSearch2" class="nameOnboard">Full Name</label>
+                            <input type="search" id="nameSearch2" name="nameSearch2" class="nameOnboard">
+                
+                            <label for="roleSearch2" class="roleOnboard">Role</label>
+                            <input type="search" id="roleSearch2" name="roleSearch2" class="roleOnboard">
+                        </div>
+                        <div class="permissionsOnboard">
+                            <label for="permissionsOnboard">Permissions:</label>
+                            <select id="permissionsOnboard">
+                                <option value="1">Standard</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <button class="save-changesOnboard">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- Custom Script -->
+    <script src="index.js"></script>
+</body>
+</html>

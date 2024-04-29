@@ -24,6 +24,9 @@ if (popup) {
   });
 }
 
+//Dynamic search filtering as user types (query Products collection in MongoDB)
+
+
 function decodeJwtResponse(token) {
   let base64Url = token.split('.')[1]
   let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -33,7 +36,7 @@ function decodeJwtResponse(token) {
   return JSON.parse(jsonPayload)
 }
 let responsePayload;
-window.handleCredentialResponse = (response) => {
+window.handleCredentialResponse = (response) => 
 // decodeJwtResponse() is a custom function Sign Updefined by you
 // to decode the credential response.
 responsePayload = decodeJwtResponse(response.credential);
