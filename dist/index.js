@@ -36,7 +36,7 @@ function decodeJwtResponse(token) {
   return JSON.parse(jsonPayload)
 }
 let responsePayload;
-window.handleCredentialResponse = (response) => 
+window.handleCredentialResponse = (response) => {
 // decodeJwtResponse() is a custom function Sign Updefined by you
 // to decode the credential response.
 responsePayload = decodeJwtResponse(response.credential);
