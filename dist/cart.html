@@ -1,51 +1,53 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Box icons -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop Cart</title>
+
+    
     <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
     />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
     <!-- Custom StyleSheet -->
     <link rel="stylesheet" href="style.css" />
-    <title>Your Cart</title>
+    <title>E-Spaza</title>
   </head>
   <body>
-    <!-- Navigation -->
-    <div class="top-nav">
-      <div class="container d-flex">
-       
-        <ul class="d-flex">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
+    <!-- Header -->
+    <header class="header" id="header">
+      <!-- Top Nav -->
+      <nav class="top-nav">
+        <div class="container d-flex">
+          <p>E-Spaza</p>
+          
+        </nav>
       </div>
-    </div>
-    <div class="navigation">
-      <div class="nav-center container d-flex">
-        <a href="index.html" class="logo"><h1>E-Spaza</h1></a>
+      <div class="navigation">
+        <div class="nav-center container d-flex">
+        <a href=".html" class="logo"><h1>E-Spaza</h1></a>
 
-        <ul class="nav-list d-flex">
-          <li class="nav-item">
-            <a href="homepage.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="product.html" class="nav-link">Shop</a>
-          </li>
-          <li class="nav-item">
+          <ul class="nav-list d-flex">
+            <li class="nav-item">
+              <a href="homepage.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="product.html" class="nav-link">Shop</a>
+            </li>
+            <li class="nav-item">
             <a href="#terms" class="nav-link">Terms</a>
-          </li>
-          <li class="nav-item">
-            <a href="#about" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contact" class="nav-link">Contact</a>
-          </li>
-          <li class="icons d-flex">
+            </li>
+            <li class="nav-item">
+              <a href="#about" class="nav-link">About</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contact" class="nav-link">Contact</a>
+            </li>
+            <li class="icons d-flex">
             <a href="login.html" class="icon">
               <i class="bx bx-user"></i>
             </a>
@@ -61,180 +63,174 @@
               <span class="d-flex">0</span>
             </a>
           </li>
-        </ul>
+          </ul>
 
-        <div class="icons d-flex">
-          <a href="login.html" class="icon">
-            <i class="bx bx-user"></i>
-          </a>
-          <div class="icon">
-            <i class="bx bx-search"></i>
-          </div>
-          <div class="icon">
-            <i class="bx bx-heart"></i>
-            <span class="d-flex">0</span>
-          </div>
-          <a href="cart.html" class="icon">
-            <i class="bx bx-cart"></i>
-            <span class="d-flex">0</span>
-          </a>
-        </div>
-
-        <div class="hamburger">
-          <i class="bx bx-menu-alt-left"></i>
-        </div>
-      </div>
-    </div>
-
-    <!-- Cart Items -->
-    <div class="container cart">
-      <table>
-        <tr>
-          <th>Product</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
-        <tr>
-          <td>
-            <div class="cart-info">
-              <img src="images/chicken.jpg" alt="" />
-              <div>
-                <p>Chicken</p>
-                <span>Price: R300.00</span> <br />
-                <a href="#">remove</a>
-              </div>
+          <div class="icons d-flex">
+            <a href="login.html" class="icon">
+              <i class="bx bx-user"></i>
+            </a>
+            <div class="icon">
+              <i class="bx bx-search"></i>
             </div>
-          </td>
-          <td><input type="number" value="1" min="1" /></td>
-          <td>R300.00</td>
-        </tr>
-        
-      </table>
-      <div class="total-price">
-        <table>
-          <tr>
-            <td>Subtotal</td>
-            <td>R300</td>
-          </tr>
-          <tr>
-            
-          </tr>
-          <tr>
-            <td>Total</td>
-            <td>R300</td>
-          </tr>
-        </table>
-        <a href="#" class="checkout btn">Proceed To Checkout</a>
+            <div class="icon">
+              <i class="bx bx-heart"></i>
+              <span class="d-flex">0</span>
+            </div>
+            <a href="cart.html" class="icon">
+              <i class="bx bx-cart"></i>
+              <span class="d-flex">0</span>
+            </a>
+          </div>
+
+          <div class="hamburger">
+            <i class="bx bx-menu-alt-left"></i>
+          </div>
+        </div>
       </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:white;
+        }
+        .cart {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .cart h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color:brown;
+        }
+        img {
+            max-width: 50px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            background-color: #e53935;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #c62828;
+        }
+        .total-row td {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cart container -->
+    <div id="cart" class="cart">
+        <h2>Shopping Cart</h2>
+        <table id="cart-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </tbody>
+            <tfoot>
+                <tr class="total-row">
+                    <td colspan="2"></td>
+                    <td>Total:</td>
+                    <td id="total-price">R0.00</td>
+                </tr>
+            </tfoot>
+        </table>
+        <button id="checkout-btn" onclick="checkout()">Checkout</button>
     </div>
 
-    <!-- Latest Products -->
-    <section class="section featured">
-      <div class="top container">
-        <h1>Latest Pluggs</h1>
-        <a href="#" class="view-more">View more</a>
-      </div>
-      <div class="product-center container">
-        <div class="product-item">
-          <div class="overlay">
-            <a href="" class="product-thumb">
-              <img src="images/toothpastecombo.jpg" alt="" />
-            </a>
-          </div>
-          <div class="product-info">
-            <span>PRODUCT</span>
-            <a href="">Toothpate X Tooth-brush combo </a>
-            <h4>R50</h4>
-          </div>
-          <ul class="icons">
-            <li><i class="bx bx-heart"></i></li>
-            <li><i class="bx bx-search"></i></li>
-            <li><i class="bx bx-cart"></i></li>
-          </ul>
-        </div>
-        <div class="product-item">
-          <div class="overlay">
-            <a href="" class="product-thumb">
-              <img src="images/onino.jpg" alt="" />
-            </a>
-            <span class="discount">40%</span>
-          </div>
-          <div class="product-info">
-            <span>FOOD</span>
-            <a href="">Fresh Onions -10 onions</a>
-            <h4>R20</h4>
-          </div>
-          <ul class="icons">
-            <li><i class="bx bx-heart"></i></li>
-            <li><i class="bx bx-search"></i></li>
-            <li><i class="bx bx-cart"></i></li>
-          </ul>
-        </div>
-        <div class="product-item">
-          <div class="overlay">
-            <a href="" class="product-thumb">
-              <img src="images/meat.jpg" alt="" />
-            </a>
-          </div>
-          <div class="product-info">
-            <span>FOOD</span>
-            <a href="">Red Meat -2kg</a>
-            <h4>R70</h4>
-          </div>
-          <ul class="icons">
-            <li><i class="bx bx-heart"></i></li>
-            <li><i class="bx bx-search"></i></li>
-            <li><i class="bx bx-cart"></i></li>
-          </ul>
-        </div>
-        <div class="product-item">
-          <div class="overlay">
-            <a href="" class="product-thumb">
-              <img src="images/bread.jpg" alt="" />
-            </a>
-          </div>
-          <div class="product-info">
-            <span>FOOD</span>
-            <a href="">Brown Bread</a>
-            <h4>R15</h4>
-          </div>
-          <ul class="icons">
-            <li><i class="bx bx-heart"></i></li>
-            <li><i class="bx bx-search"></i></li>
-            <li><i class="bx bx-cart"></i></li>
-          </ul>
-        </div>
-      </div>
-    </section>
+    <script>
+        // Function to render cart items and calculate total price
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTable = document.getElementById('cart-table');
+            const totalPriceCell = document.getElementById('total-price');
+            cartItemsContainer.innerHTML = '';
+            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalPrice = 0;
+            cartItems.forEach(item => {
+                const cartItemRow = document.createElement('tr');
+                cartItemRow.innerHTML = `
+                    <td><img src="${item.image}" alt="${item.name}"></td>
+                    <td>${item.name}</td>
+                    <td>R${item.price}</td>
+                    <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
+                `;
+                cartItemsContainer.appendChild(cartItemRow);
+                totalPrice += item.price;
+            });
+            totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
+        }
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="row">
-        <div class="col d-flex">
-          <h4>INFORMATION</h4>
-          <a href="">About us</a>
-          <a href="">Contact Us</a>
-          <a href="">Term & Conditions</a>
-          <a href="">Shipping Guide</a>
-        </div>
-        <div class="col d-flex">
-          <h4>USEFUL LINK</h4>
-          <a href="">Online Store</a>
-          <a href="">Customer Services</a>
-          <a href="">Promotion</a>
-          <a href="">Top Brands</a>
-        </div>
-        <div class="col d-flex">
-          <span><i class="bx bxl-facebook-square"></i></span>
-          <span><i class="bx bxl-instagram-alt"></i></span>
-          <span><i class="bx bxl-github"></i></span>
-          <span><i class="bx bxl-twitter"></i></span>
-          <span><i class="bx bxl-pinterest"></i></span>
-        </div>
-      </div>
-    </footer>
+        // Function to remove product from cart
+        function removeFromCart(productId) {
+            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItems = cartItems.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            renderCart(); // Render updated cart
+        }
 
-    <!-- Custom Script -->
-    <script src="index.js"></script>
-  </body>
+        // Function to handle checkout
+        function checkout() {
+            alert('We have received your order!');
+        }
+
+        // Initialize the page
+        renderCart();
+    </script>
+</body>
+<footer class="footer">
+  <div class="row">
+    <div class="col d-flex">
+      <h4>INFORMATION</h4>
+      <a href="">About us</a>
+      <a href="">Contact Us</a>
+      <a href="">Term & Conditions</a>
+      <a href="">Shipping Guide</a>
+    </div>
+    <div class="col d-flex">
+      <h4>USEFUL LINK</h4>
+      <a href="">Online Store</a>
+      <a href="">Customer Services</a>
+      <a href="">Promotion</a>
+      <a href="">Top Brands</a>
+    </div>
+    <div class="col d-flex">
+      <span><i class='bx bxl-facebook-square'></i></span>
+      <span><i class='bx bxl-instagram-alt' ></i></span>
+      <span><i class='bx bxl-github' ></i></span>
+      <span><i class='bx bxl-twitter' ></i></span>
+      <span><i class='bx bxl-pinterest' ></i></span>
+    </div>
+  </div>
+</footer>
+
 </html>
