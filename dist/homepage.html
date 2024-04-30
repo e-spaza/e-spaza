@@ -75,9 +75,14 @@
             <a href="login.html" class="icon">
               <i class="bx bx-user"></i>
             </a>
-            <form action="/homepage" method="post" class="search-bar">
+            <form id="searchForm" class="search-bar">
               <input type="text" name="product" placeholder="Search products here" class="search-input">
             </form>
+            <!-- <form id="searchForm" class="search-bar">
+              <input type="text" name="product" placeholder="Search products here" class="search-input">
+              <button type="submit">Search</button>
+            </form> -->
+            <div id="productPopup" class="product-popup"></div>
             <div class="icon">
               <i class="bx bx-heart"></i>
               <span class="d-flex">0</span>
@@ -451,6 +456,63 @@
       </div>
     </footer>
 
+
+    <script>
+      document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // prevent the form from submitting normally
+      
+        var product = document.querySelector('input[name="product"]').value;
+      
+        fetch('/homepage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ product: product }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // handle the JSON response here
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+      </script>
+    <!-- <script>
+      document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // prevent the form from submitting normally
+
+        var product = document.querySelector('input[name="product"]').value;
+
+        fetch('/homepage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ product: product }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          // handle the JSON response here
+          var productPopup = document.getElementById('productPopup');
+          productPopup.textContent = JSON.stringify(data);
+          productPopup.style.display = 'block'; // show the popup
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+
+      // hide the popup when the user clicks outside of it
+      window.addEventListener('click', function(event) {
+        var productPopup = document.getElementById('productPopup');
+        if (event.target != productPopup && event.target != document.querySelector('input[name="product"]')) {
+          productPopup.style.display = 'none';
+        }
+      });
+      </script> -->
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
   <script src="slider.js"></script>

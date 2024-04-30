@@ -132,8 +132,20 @@ Navigation
 }
 
 .search-input {
-  padding: 5px 20px; /* Adjust as needed */
+  padding: 5px 20px;
 }
+
+/* .product-popup {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 300px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  padding: 10px;
+  display: none;
+  z-index: 1;
+} */
 
 .navbarOnboard {
   display: flex;
