@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Box icons -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop Products</title>
+
+
+  
     <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
     />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
     <!-- Custom StyleSheet -->
     <link rel="stylesheet" href="style.css" />
-    <title>product</title>
+    <title>E-Spaza</title>
   </head>
-
   <body>
-    <!-- Navigation -->
-    <div class="top-nav">
-      <div class="container d-flex">
-        
-        <ul class="d-flex">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
+    <!-- Header -->
+    <header class="header" id="header">
+      <!-- Top Nav -->
+      <nav class="top-nav">
+        <div class="container d-flex">
+          <p>E-Spaza</p>
+          
+        </nav>
       </div>
-    </div>
-    <div class="navigation">
-      <div class="nav-center container d-flex">
-        <a href="index.html" class="logo"><h1>E-Spaza</h1></a>
+      <div class="navigation">
+        <div class="nav-center container d-flex">
+        <a href=".html" class="logo"><h1>E-Spaza</h1></a>
 
-        <ul class="nav-list d-flex">
-          <li class="nav-item">
-            <a href="homepage.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="product.html" class="nav-link">Shop</a>
-          </li>
-          <li class="nav-item">
+          <ul class="nav-list d-flex">
+            <li class="nav-item">
+              <a href="homepage.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="product.html" class="nav-link">Shop</a>
+            </li>
+            <li class="nav-item">
             <a href="#terms" class="nav-link">Terms</a>
-          </li>
-          <li class="nav-item">
-            <a href="#about" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contact" class="nav-link">Contact</a>
-          </li>
-          <li class="icons d-flex">
+            </li>
+            <li class="nav-item">
+              <a href="#about" class="nav-link">About</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contact" class="nav-link">Contact</a>
+            </li>
+            <li class="icons d-flex">
             <a href="login.html" class="icon">
               <i class="bx bx-user"></i>
             </a>
@@ -61,236 +64,164 @@
               <span class="d-flex">0</span>
             </a>
           </li>
-        </ul>
+          </ul>
 
-        <div class="icons d-flex">
-          <a href="login.html" class="icon">
-            <i class="bx bx-user"></i>
-          </a>
-          <div class="icon">
-            <i class="bx bx-search"></i>
+          <div class="icons d-flex">
+            <a href="login.html" class="icon">
+              <i class="bx bx-user"></i>
+            </a>
+            <div class="icon">
+              <i class="bx bx-search"></i>
+            </div>
+            <div class="icon">
+              <i class="bx bx-heart"></i>
+              <span class="d-flex">0</span>
+            </div>
+            <a href="cart.html" class="icon">
+              <i class="bx bx-cart"></i>
+              <span class="d-flex">0</span>
+            </a>
           </div>
-          <div class="icon">
-            <i class="bx bx-heart"></i>
-            <span class="d-flex">0</span>
-          </div>
-          <a href="cart.html" class="icon">
-            <i class="bx bx-cart"></i>
-            <span class="d-flex">0</span>
-          </a>
-        </div>
 
-        <div class="hamburger">
-          <i class="bx bx-menu-alt-left"></i>
+          <div class="hamburger">
+            <i class="bx bx-menu-alt-left"></i>
+          </div>
         </div>
       </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff; /* White background */
+        }
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .product {
+            width: calc(25% - 20px); /* Adjusted width to fit 4 products in a row */
+            margin-bottom: 40px; /* Added margin to create space between products */
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            background-color: #f9f9f9; /* Light gray background */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .product img {
+            max-width: 80%; /* Adjusted image width */
+            height: auto;
+            border-radius: 8px; /* Rounded corners for images */
+            margin-bottom: 10px; /* Added margin below the image */
+        }
+        .product h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 16px; /* Reduced font size */
+        }
+        .product p {
+            margin-bottom: 10px;
+            font-size: 14px; /* Reduced font size */
+            color: #777; /* Gray color for price */
+        }
+        .add-to-cart {
+            background-color: #795548; /* Brown button color */
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: #5d4037; /* Darker brown on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Products container -->
+    <div class="products-container" id="products-container">
+       
     </div>
 
-    <!-- All Products -->
-    <section class="section all-products" id="products">
-      <div class="top container">
-        <h1>All Products</h1>
-        <form>
-          <select>
-            <option value="1">Default Sorting</option>
-            <option value="2">Sort By Price</option>
-            <option value="3">Sort By Popularity</option>
-            <option value="4">Sort By Sale</option>
-            <option value="5">Sort By Rating</option>
-          </select>
-          <span><i class="bx bx-chevron-down"></i></span>
-        </form>
-      </div>
-     
-            
-  
-      
-        <div class="product-center containe">
-          <div class="product-item">
-            <div class="overlay">
-              <a href="productDetails.html" class="product-thumb">
-                <img src="images/lays.jpg" alt="" />
-              </a>
-            </div>
-            <div class="product-info">
-              <span>SNACKS</span>
-              <a href="productDetails.html">Lays</a>
-              <h4>R25</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/rollon.jpg" alt="" />
-              </a>
-              <span class="discount">50%</span>
-            </div>
-  
-            <div class="product-info">
-              <span>PRODUCTS</span>
-              <a href="">Nivea Men Invisible for Black & White Anti-perspirant Roll-on</a>
-              <h4>R40</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/colddrink.jpg" alt="" />
-              </a>
-            </div>
-            <div class="product-info">
-              <span>SNACKS</span>
-              <a href="">
-                  Coca-cola Soft Drink Cans -24 x 400 ml</a>
-              <h4>R18</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/potato.jpg" alt="" />
-              </a>
-              <span class="discount">50%</span>
-            </div>
-            <div class="product-info">
-              <span>FOOD</span>
-              <a href="">Potato bag -30 potatoes</a>
-              <h4>R200</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/toothpastecombo.jpg" alt="" />
-              </a>
-            </div>
-            <div class="product-info">
-              <span>PRODUCTS</span>
-              <a href="">Toothpate X Tooth-brush combo </a>
-              <h4>R50</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/onino.jpg" alt="" />
-              </a>
-            </div>
-            <div class="product-info">
-              <span>FOOD</span>
-              <a href="">Fresh Onions -10 onions</a>
-              <h4>R20</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/meat.jpg" alt="" />
-              </a>
-              <span class="discount">50%</span>
-            </div>
-            <div class="product-info">
-              <span>FOOD</span>
-              <a href="">Red Meat -2kg</a>
-              <h4>R70</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-          <div class="product-item">
-            <div class="overlay">
-              <a href="" class="product-thumb">
-                <img src="images/bread.jpg" alt="" />
-              </a>
-            </div>
-            <div class="product-info">
-              <span>FOOOD</span>
-              <a href="">Brown Bread</a>
-              <h4>R15</h4>
-            </div>
-            <ul class="icons">
-              <li><i class="bx bx-heart"></i></li>
-              <li><i class="bx bx-search"></i></li>
-              <li><i class="bx bx-cart"></i></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-  
-  
-     
-  
-  
-  
-  
-      
-      
-    <section class="pagination">
-      <div class="container">
-        <span>1</span> <span>2</span> <span>3</span> <span>4</span>
-        <span><i class="bx bx-right-arrow-alt"></i></span>
-      </div>
-    </section>
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="row">
-        <div class="col d-flex">
-          <h4>INFORMATION</h4>
-          <a href="">About us</a>
-          <a href="">Contact Us</a>
-          <a href="">Term & Conditions</a>
-          <a href="">Shipping Guide</a>
-        </div>
-        <div class="col d-flex">
-          <h4>USEFUL LINK</h4>
-          <a href="">Online Store</a>
-          <a href="">Customer Services</a>
-          <a href="">Promotion</a>
-          <a href="">Top Brands</a>
-        </div>
-        <div class="col d-flex">
-          <span><i class="bx bxl-facebook-square"></i></span>
-          <span><i class="bx bxl-instagram-alt"></i></span>
-          <span><i class="bx bxl-github"></i></span>
-          <span><i class="bx bxl-twitter"></i></span>
-          <span><i class="bx bxl-pinterest"></i></span>
-        </div>
-      </div>
-    </footer>
-    <!-- Custom Script -->
-    <script src="index.js"></script>
-  </body>
+    <script>
+        
+        const products = [
+            { id: 1, name: 'Soap', price: 10, image: 'soap.jpg' },
+            { id: 2, name: 'Window Scrub', price: 45, image: 'windowscrub.jpg' },
+            { id: 3, name: 'Broom', price: 67, image: 'broom.jpg' },
+            { id: 4, name: 'Straw-Berries', price: 25, image: '13.jpg' },
+            { id: 17, name: 'Onions', price: 10, image: 'onino.jpg' },
+            { id: 16, name: 'ToothPaste X Teeth Brush', price: 30, image: 'toothpastecombo.jpg' },
+            { id: 13, name: 'Fruits', price: 20, image: 'veg.jpg' },
+            { id: 12, name: 'Potato', price: 25, image: 'potato.jpg' },
+            { id: 11, name: 'Meat', price: 60, image: 'meat.jpg' },
+            { id: 10, name: 'Fries', price: 30, image: 'fries.jpg' },
+            { id: 14, name: 'Chicken', price: 200, image: 'chicken.jpg' },
+            { id: 15, name: 'Cold Drnk', price: 15, image: 'colddrink.jpg' },
+            // Add more products as needed
+        ];
+
+        // Function to render products
+        function renderProducts() {
+            const productsContainer = document.getElementById('products-container');
+            productsContainer.innerHTML = '';
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>R${product.price}</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productsContainer.appendChild(productElement);
+            });
+        }
+
+        // Function to add product to cart
+        function addToCart(productId) {
+            const productToAdd = products.find(product => product.id === productId);
+            if (productToAdd) {
+                let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+                cartItems.push({ ...productToAdd }); // Add a copy of the product to cart
+                localStorage.setItem('cart', JSON.stringify(cartItems));
+                alert(`Added ${productToAdd.name} to cart!`);
+            }
+        }
+
+        
+        renderProducts();
+    </script>
+</body>
+
+<footer class="footer">
+  <div class="row">
+    <div class="col d-flex">
+      <h4>INFORMATION</h4>
+      <a href="">About us</a>
+      <a href="">Contact Us</a>
+      <a href="">Term & Conditions</a>
+      <a href="">Shipping Guide</a>
+    </div>
+    <div class="col d-flex">
+      <h4>USEFUL LINK</h4>
+      <a href="">Online Store</a>
+      <a href="">Customer Services</a>
+      <a href="">Promotion</a>
+      <a href="">Top Brands</a>
+    </div>
+    <div class="col d-flex">
+      <span><i class='bx bxl-facebook-square'></i></span>
+      <span><i class='bx bxl-instagram-alt' ></i></span>
+      <span><i class='bx bxl-github' ></i></span>
+      <span><i class='bx bxl-twitter' ></i></span>
+      <span><i class='bx bxl-pinterest' ></i></span>
+    </div>
+  </div>
+</footer>
+
 </html>
