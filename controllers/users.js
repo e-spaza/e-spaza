@@ -35,13 +35,11 @@ usersRouter.post('/login', (req, res) => {
             } else {
                 // Send a response with the user details
                 res.status(200).json(user);
-                
             }
         })
         .catch(err => {
             res.status(500).send('Server error');
         });
 });
-
 
 module.exports = usersRouter

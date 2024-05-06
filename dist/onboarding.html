@@ -20,10 +20,10 @@
 <body>
     <body>
         <nav class="navbarOnboard">
-            <a href="#" class="nav-linkOnboard nav-title">E-spaza</a>
+            <a href="homepage.html" class="nav-linkOnboard nav-title">E-spaza</a>
             <div class="nav-links">
                 <a href="#inventory" class="nav-linkOnboard">Inventory</a>
-                <a href="#orders" class="nav-linkOnboard">Orders</a>
+                <a href="orderDashboard.html" class="nav-linkOnboard">Orders</a>
                 <a href="#communication" class="nav-linkOnboard">Communication</a>
                 <a href="#user-management" class="nav-linkOnboard">User Management</a>
             </div>
@@ -79,4 +79,56 @@
     <!-- Custom Script -->
     <script src="index.js"></script>
 </body>
+<script>
+    // Select the form element
+const form = document.querySelector('.onboard-form');
+//make form text to be black
+form.style.color = 'black';
+
+// Add an event listener to the form submit event
+form.addEventListener('submit', function(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get the form data
+    const formData = new FormData(form);
+
+    // Convert formData to JSON object
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    console.log(data)
+    // Send the data to the server using fetch
+    fetch('/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        // Check if the response is ok
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        //send an alert to the user
+        alert('Staff user has been onboarded successfully');
+        //erase the data in the form
+        form.reset();
+        // If the response is ok, return the JSON response
+        return response.json();
+    })
+    .then(json => {
+        // Log the JSON response
+        console.log(json);
+        // Optionally, you can handle the response here
+    })
+    .catch(error => {
+        // Log any errors
+        console.error('There was a problem with your fetch operation:', error);
+    });
+});
+
+</script>
 </html>
