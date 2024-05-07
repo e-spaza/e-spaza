@@ -151,6 +151,7 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Quantity</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -169,27 +170,33 @@
     </div>
 
     <script>
-        // Function to render cart items and calculate total price
-        function renderCart() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTable = document.getElementById('cart-table');
-            const totalPriceCell = document.getElementById('total-price');
-            cartItemsContainer.innerHTML = '';
-            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            let totalPrice = 0;
-            cartItems.forEach(item => {
-                const cartItemRow = document.createElement('tr');
-                cartItemRow.innerHTML = `
-                    <td><img src="images/${item.image}" alt="${item.name}"></td>
-                    <td>${item.name}</td>
-                    <td>R${item.price}</td>
-                    <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
-                `;
-                cartItemsContainer.appendChild(cartItemRow);
-                totalPrice += item.price;
-            });
-            totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
-        }
+// Function to render cart items and calculate total price
+function renderCart() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTable = document.getElementById('cart-table');
+    const totalPriceCell = document.getElementById('total-price');
+    cartItemsContainer.innerHTML = '';
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+        item.quantity = item.quantity || 1; // Default quantity to 1 if not defined
+        const cartItemRow = document.createElement('tr');
+        cartItemRow.innerHTML = `
+            <td><img src="images/${item.image}" alt="${item.name}"></td>
+            <td>${item.name}</td>
+            <td>R${item.price}</td>
+            <td>
+            <select id="quantity-${item.id}" onchange="updateQuantity(${item.id})">
+                ${Array.from({length: 10}, (_, i) => `<option value="${i+1}" ${item.quantity === i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}
+            </select>
+        </td>
+            <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
+        `;
+        cartItemsContainer.appendChild(cartItemRow);
+        totalPrice += item.price * item.quantity; // Multiply price by quantity
+    });
+    totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
+}
 
         // Function to remove product from cart
         function removeFromCart(productId) {
@@ -206,6 +213,19 @@
 
         // Initialize the page
         renderCart();
+
+        // Function to update quantity of a product in the cart
+        function updateQuantity(productId) {
+        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        let quantitySelect = document.getElementById('quantity-' + productId);
+        let newQuantity = parseInt(quantitySelect.value, 10);
+        let itemToUpdate = cartItems.find(item => item.id === productId);
+        if (itemToUpdate) {
+            itemToUpdate.quantity = newQuantity;
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+            renderCart();
+            }
+        }
     </script>
 </body>
 <footer class="footer">

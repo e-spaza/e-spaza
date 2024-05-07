@@ -43,8 +43,8 @@ searchForm.addEventListener('submit', (event) => {
   document.querySelector('.popup-img').src = `images/${data.product.toLowerCase()}.jpg`;
   document.querySelector('.product-name').textContent = data.product;
   document.querySelector('.product-price').textContent = `R${data.price}`;
-  document.querySelector('.product-availability').textContent = data.availability;
-  document.querySelector('#quantity').max = data.quantity;
+  document.querySelector('.product-availability').textContent = `Available at: ${data.availability}`;
+  
 
   // Show the popup
   popup.classList.remove("hide-popup");
