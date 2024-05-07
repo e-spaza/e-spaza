@@ -118,7 +118,8 @@
             background-color:brown;
         }
         img {
-            max-width: 50px;
+            max-width: 95px;
+            max-height: 95px;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -179,7 +180,7 @@
             cartItems.forEach(item => {
                 const cartItemRow = document.createElement('tr');
                 cartItemRow.innerHTML = `
-                    <td><img src="${item.image}" alt="${item.name}"></td>
+                    <td><img src="images/${item.image}" alt="${item.name}"></td>
                     <td>${item.name}</td>
                     <td>R${item.price}</td>
                     <td><button onclick="removeFromCart(${item.id})">Remove</button></td>

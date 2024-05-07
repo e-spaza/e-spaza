@@ -1,13 +1,15 @@
 const mongoose = require('mongoose')
 
 const orderSchema = new mongoose.Schema({
-    order_id: String,
-    user_id: String,
-    products: Array,
+    //order_id: String,
+    //user_id: String,
+    //products: Array,
+    product: String,
     price: Number,
-    total_price: Number,
-    order_date: Date,
-    status: String
+    //total_price: Number,
+    //order_date: Date,
+    //status: String,
+    availability: String
 })
 
 const Order = mongoose.model('Order', orderSchema)

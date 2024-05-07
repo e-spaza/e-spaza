@@ -16,15 +16,43 @@ if (popup) {
   closePopup.addEventListener("click", () => {
     popup.classList.add("hide-popup");
   });
-
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      popup.classList.remove("hide-popup");
-    }, 1000);
-  });
 }
 
-//Dynamic search filtering as user types (query Products collection in MongoDB)
+// Get the search form
+const searchForm = document.querySelector('#searchForm');
+
+// Add an event listener to the form
+searchForm.addEventListener('submit', (event) => {
+  // Prevent the form from submitting normally
+  event.preventDefault();
+
+  // Get the product name from the search input
+  let selectedProduct = document.querySelector('.search-input').value;
+
+  // Send a POST request to the '/homepage' route with the selected product's name
+  fetch('/homepage', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ product: selectedProduct }),
+  })
+  .then(response => response.json())
+.then(data => {
+  // Update the popup with the product details
+  document.querySelector('.popup-img').src = `images/${data.product.toLowerCase()}.jpg`;
+  document.querySelector('.product-name').textContent = data.product;
+  document.querySelector('.product-price').textContent = `R${data.price}`;
+  document.querySelector('.product-availability').textContent = data.availability;
+  document.querySelector('#quantity').max = data.quantity;
+
+  // Show the popup
+  popup.classList.remove("hide-popup");
+})
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+});
 
 
 function decodeJwtResponse(token) {

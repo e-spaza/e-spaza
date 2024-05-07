@@ -173,7 +173,7 @@
                 const productElement = document.createElement('div');
                 productElement.className = 'product';
                 productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
+                    <img src="images/${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>R${product.price}</p>
                     <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
