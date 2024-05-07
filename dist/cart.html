@@ -179,7 +179,10 @@ function renderCart() {
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     let totalPrice = 0;
     cartItems.forEach(item => {
-        item.quantity = item.quantity || 1; // Default quantity to 1 if not defined
+        if (!item.quantity) {
+            item.quantity = 1; // Default quantity to 1 if not defined
+            localStorage.setItem('cart', JSON.stringify(cartItems)); // Save updated cartItems back to localStorage
+        }
         const cartItemRow = document.createElement('tr');
         cartItemRow.innerHTML = `
             <td><img src="images/${item.image}" alt="${item.name}"></td>
@@ -206,26 +209,57 @@ function renderCart() {
             renderCart(); // Render updated cart
         }
 
-        // Function to handle checkout
-        function checkout() {
-            alert('We have received your order!');
-        }
+// Function to handle checkout
+function checkout() {
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Create a new array that only includes the 'product', 'price', and 'quantity' fields
+    let cartItemsToLog = cartItems.map(item => ({
+        product: item.name,
+        price: item.price,
+        quantity: item.quantity
+    }));
+
+    console.log(JSON.stringify(cartItemsToLog, null, 2)); // Log cart details
+
+    // Make a POST request to '/placeOrder' for each item in the cart
+    cartItems.forEach(item => {
+        fetch('/placeOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                product: item.name, // changed from item.product to item.name
+                price: item.price,
+                quantity: item.quantity, // added item.quantity
+            }),
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+
+    alert('We have received your order!');
+}
 
         // Initialize the page
         renderCart();
 
-        // Function to update quantity of a product in the cart
-        function updateQuantity(productId) {
-        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        let quantitySelect = document.getElementById('quantity-' + productId);
-        let newQuantity = parseInt(quantitySelect.value, 10);
-        let itemToUpdate = cartItems.find(item => item.id === productId);
-        if (itemToUpdate) {
-            itemToUpdate.quantity = newQuantity;
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-            renderCart();
-            }
-        }
+      // Function to update quantity of a product in the cart
+      function updateQuantity(productId) {
+          let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+          let quantitySelect = document.getElementById('quantity-' + productId);
+          let newQuantity = parseInt(quantitySelect.value, 10);
+          let itemToUpdate = cartItems.find(item => item.id === productId);
+          if (itemToUpdate) {
+              itemToUpdate.quantity = newQuantity;
+              localStorage.setItem('cart', JSON.stringify(cartItems)); // Save updated cartItems back to localStorage
+              renderCart();
+          }
+      }
     </script>
 </body>
 <footer class="footer">
