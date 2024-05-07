@@ -1,6 +1,5 @@
 
 name: Codecov
-max_report_age: off
 on:
   push:
     branches: [ main ]
