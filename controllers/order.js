@@ -7,6 +7,7 @@ orderRouter.post('/placeOrder', (req, res) => {
     product: req.body.product,
     price: req.body.price,
     quantity: req.body.quantity,
+    cartId: req.body.cartId,
     //order_id: req.body.orderId,
     //user_id: req.body.userId,
     //total_price: req.body.totalPrice,

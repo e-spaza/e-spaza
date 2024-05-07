@@ -213,14 +213,18 @@ function renderCart() {
 function checkout() {
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     
-    // Create a new array that only includes the 'product', 'price', and 'quantity' fields
+    // Generate a unique cart ID
+    let cartId = Date.now().toString();
+
+    // Create a new array that only includes the 'product', 'price', 'quantity', and 'cartId' fields
     let cartItemsToLog = cartItems.map(item => {
         delete item.image;
         delete item.id;
         return {
             product: item.name,
             price: item.price,
-            quantity: item.quantity
+            quantity: item.quantity,
+            cartId: cartId
         };
     });
 
@@ -237,6 +241,7 @@ function checkout() {
                 product: item.name,
                 price: item.price,
                 quantity: item.quantity,
+                cartId: cartId
             }),
         })
         .then(response => response.json())

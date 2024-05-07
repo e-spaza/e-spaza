@@ -4,6 +4,7 @@ const orderSchema = new mongoose.Schema({
     product: String,
     price: Number,
     quantity: Number,
+    cartId: String,
     //order_id: String,
     //user_id: String,
     //products: Array,
@@ -11,7 +12,7 @@ const orderSchema = new mongoose.Schema({
     //order_date: Date,
     //status: String,
     //availability: String
-});
+}, { versionKey: false });
 
 const Order = mongoose.model('Order', orderSchema)
 
