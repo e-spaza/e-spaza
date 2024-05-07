@@ -24,6 +24,9 @@ if (popup) {
   });
 }
 
+//Dynamic search filtering as user types (query Products collection in MongoDB)
+
+
 function decodeJwtResponse(token) {
   let base64Url = token.split('.')[1]
   let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -42,6 +45,19 @@ console.log("ID: " + responsePayload.sub);
 console.log('Given Name: ' + responsePayload.given_name);
 console.log('Family Name: ' + responsePayload.family_name);
 console.log("Email: " + responsePayload.email);
+let radios = document.getElementsByName('user-type');
+
+// Iterate over the radio buttons
+let usertype = "";
+for(let i = 0; i < radios.length; i++) {
+    // If the radio button is selected
+    if(radios[i].checked) {
+        // Log its value
+        console.log(radios[i].value);
+        usertype = radios[i].value;
+        break;
+    }
+}
 
 // Send the signup response to the server and handle 409 error for user already exists
 fetch('/signup', {
@@ -54,6 +70,7 @@ fetch('/signup', {
     name: responsePayload.given_name,
     surname: responsePayload.family_name,
     email: responsePayload.email,
+    role: usertype,
   }),
 })
   .then((res) => {
@@ -78,6 +95,20 @@ window.handleCredentialResponseLogin = (response) => {
   console.log('Given Name: ' + responsePayload.given_name);
   console.log('Family Name: ' + responsePayload.family_name);
   console.log("Email: " + responsePayload.email);
+  // Get all radio buttons with the name 'user-type'
+let radios = document.getElementsByName('user-type');
+
+// Iterate over the radio buttons
+let usertype = "";
+for(let i = 0; i < radios.length; i++) {
+    // If the radio button is selected
+    if(radios[i].checked) {
+        // Log its value
+        console.log(radios[i].value);
+        usertype = radios[i].value;
+        break;
+    }
+}
   
   // Send the login to the server and handle user not found error
   fetch('/login', {
@@ -90,18 +121,34 @@ window.handleCredentialResponseLogin = (response) => {
       name: responsePayload.given_name,
       surname: responsePayload.family_name,
       email: responsePayload.email,
+      role: usertype,
     }),
   })
     .then((res) => {
       if (res.status === 400) {
         alert('User not found');
       } else if (res.status === 200) {
+        return res.json();
+    }
+    })
+    .then(user => {
+      console.log(user);
+
         alert('User logged in successfully');
-        window.location.href = 'homepage.html';
-      }
+        //window.location.href = 'homepage.html';
+        if (user.role === "store-owner")
+        {
+          window.location.href = 'onboarding.html';
+        }else if (user.role === "customer")
+        {
+          window.location.href = 'homepage.html';
+        }else
+        {
+          window.location.href = 'orderDashboard.html';
+        }
     })
     .catch((err) => {
       console.log(err);
     });
-  }
+}
   

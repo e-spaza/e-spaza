@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+    <!-- Custom StyleSheet -->
+    <link rel="stylesheet" href="style.css" />
+    <title>Order Management</title>
+</head>
+<body>
+    <nav class="navbarOnboard">
+        <a href="#" class="nav-linkOnboard nav-title">E-spaza</a>
+        <div class="nav-right">
+            <input type="search" id="site-search" name="q" class="site-search"
+                aria-label="Search through site content" placeholder="Search orders/inventory">
+            <a href="#" class="notification-icon">
+                <i class='bx bx-bell'></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="containerOrderManagement">
+        <div class="sidebarOrderManagement">
+            <ul>
+                <li><a href="#"><i class="icon-dashboard"></i> Dashboard</a></li>
+                <li><a href="#"><i class="icon-orders"></i> Orders</a></li>
+                <li><a href="#"><i class="icon-inventory"></i> Inventory</a></li>
+                <li><a href="#"><i class="icon-staff"></i> Staff</a></li>
+                <li><a href="#"><i class="icon-communication"></i> Communication</a></li>
+                <li><a href="#"><i class="icon-settings"></i> Settings</a></li>
+              </ul>
+        </div>
+        <div class="main-contentOrderManagement">
+            <div class="top-sectionOrderManagement">
+                <div class="headerOrderManagement">
+                    <h3>Order Management</h3>
+                </div>
+                <div class="search-barOrderManagement">
+                    <input type="text" placeholder="Search Orders">
+                    <select>
+                        <option value="" disabled selected>Filter by Status</option>
+                        <!-- Add options here -->
+                    </select>
+                </div>
+            </div>
+            <div class="bottom-sectionOrderManagement">
+                <table class="tableOrderManagement">
+                    <thead class="theadOrderManagement">
+                      <tr class="trOrderManagement">
+                        <th class="thOrderManagement">Order No.</th>
+                        <th class="thOrderManagement">Customer</th>
+                        <th class="thOrderManagement">Status</th>
+                        <th class="thOrderManagement">Options</th>
+                      </tr>
+                    </thead>
+                    <tbody class="tbodyOrderManagement">
+                        <tr class="trOrderManagement">
+                            <td class="tdOrderManagement"><input type="text" placeholder="Enter Order No."></td>
+                            <td class="tdOrderManagement"><input type="text" placeholder="Enter Customer"></td>
+                            <td class="tdOrderManagement"><input type="text" placeholder="Enter Status"></td>
+                          <td class="tdOrderManagement">
+                            <button class="buttonOrderManagement">View</button>
+                            <button class="buttonOrderManagement">Process</button>
+                            <button class="buttonOrderManagement">Update</button>
+                          </td>
+                        </tr>
+                        <!-- More rows will be added here -->
+                      </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="footerOnboardDashboard">
+        <div class="footer-columnOnboardDashboard">
+            <a class="footer-linkOnboardDashboard" href="#">Terms of Service</a>
+        </div>
+        <div class="footer-columnOnboardDashboard">
+            <a class="footer-linkOnboardDashboard" href="#">Privacy Policy</a>
+        </div>
+        <div class="footer-columnOnboardDashboard">
+            <a class="footer-linkOnboardDashboard" href="#">Contact Us</a>
+        </div>
+        <div class="footer-columnOnboardDashboard">
+            <a class="footer-linkOnboardDashboard" href="#" id="date_time"></a>
+        </div>
+    </div>
+
+    <script>
+        function renderTime() {
+            var currentTime = new Date();
+            var date = currentTime.toDateString();
+            var time = currentTime.toLocaleTimeString();
+            document.getElementById('date_time').textContent = date + ' ' + time;
+        }
+        window.onload = renderTime;
+        setInterval(renderTime, 1000);
+    </script>
+    <!-- Custom Script -->
+    <script src="index.js"></script>
+</body>
+</html>

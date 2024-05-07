@@ -33,6 +33,7 @@ usersRouter.post('/login', (req, res) => {
             if (!user) {
                 res.status(400).send('User does not exist');
             } else {
+                // Send a response with the user details
                 res.status(200).json(user);
             }
         })
@@ -40,10 +41,5 @@ usersRouter.post('/login', (req, res) => {
             res.status(500).send('Server error');
         });
 });
-usersRouter.get('/login', (req, res) => {
-    console.log('login')
-});
-
-
 
 module.exports = usersRouter
