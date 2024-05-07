@@ -1,6 +1,5 @@
 
 name: Codecov
-max_report_age: off
 on:
   push:
     branches: [ main ]
@@ -23,10 +22,7 @@ jobs:
       run: npm ci
 
     - name: Run tests with coverage
-      run: npm test
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
+      run: npm test -- --coverage
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v4.0.1
