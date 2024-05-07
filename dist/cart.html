@@ -214,11 +214,15 @@ function checkout() {
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     
     // Create a new array that only includes the 'product', 'price', and 'quantity' fields
-    let cartItemsToLog = cartItems.map(item => ({
-        product: item.name,
-        price: item.price,
-        quantity: item.quantity
-    }));
+    let cartItemsToLog = cartItems.map(item => {
+        delete item.image;
+        delete item.id;
+        return {
+            product: item.name,
+            price: item.price,
+            quantity: item.quantity
+        };
+    });
 
     console.log(JSON.stringify(cartItemsToLog, null, 2)); // Log cart details
 
@@ -230,9 +234,9 @@ function checkout() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                product: item.name, // changed from item.product to item.name
+                product: item.name,
                 price: item.price,
-                quantity: item.quantity, // added item.quantity
+                quantity: item.quantity,
             }),
         })
         .then(response => response.json())

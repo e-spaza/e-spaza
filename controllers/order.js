@@ -6,7 +6,7 @@ orderRouter.post('/placeOrder', (req, res) => {
   const newOrder = new Order({
     product: req.body.product,
     price: req.body.price,
-    quantity: req.body.quantity
+    quantity: req.body.quantity,
     //order_id: req.body.orderId,
     //user_id: req.body.userId,
     //total_price: req.body.totalPrice,

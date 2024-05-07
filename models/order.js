@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema({
     //order_date: Date,
     //status: String,
     //availability: String
-})
+});
 
 const Order = mongoose.model('Order', orderSchema)
 
