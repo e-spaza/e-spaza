@@ -1177,7 +1177,7 @@ Hero Media Query
 
 footer .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   max-width: 99.6rem;
   margin: 0 auto;
 }
