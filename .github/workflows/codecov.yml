@@ -1,4 +1,6 @@
+
 name: Codecov
+max_report_age: off
 on:
   push:
     branches: [ main ]
@@ -30,6 +32,3 @@ jobs:
       uses: codecov/codecov-action@v4.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-
-codecov:
-  max_report_age: off
