@@ -24,7 +24,7 @@
       <!-- Top Nav -->
       <nav class="top-nav">
         <div class="container d-flex">
-          <p>E-Spaza</p>
+          <a href="homepage.html">E-spaza</a>
           
         </nav>
       </div>
@@ -173,7 +173,7 @@
                 const productElement = document.createElement('div');
                 productElement.className = 'product';
                 productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
+                    <img src="images/${product.image}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>R${product.price}</p>
                     <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
@@ -213,6 +213,13 @@
       <a href="">Customer Services</a>
       <a href="">Promotion</a>
       <a href="">Top Brands</a>
+    </div>
+    <div class="col d-flex">
+      <h4>Dashboards</h4>
+      <a href="custOrderDashboard.html">Your Orders</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="orderDashboard.html">Order Dashboard</a>
+      <a href="orderManagement.html">Order Management</a>
     </div>
     <div class="col d-flex">
       <span><i class='bx bxl-facebook-square'></i></span>

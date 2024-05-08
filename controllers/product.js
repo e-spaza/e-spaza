@@ -2,7 +2,7 @@ const productRouter = require('express').Router()
 const Product = require('../models/product');
 //route for retrieving products
 productRouter.post('/homepage', (req, res) => {
-    // Check if user exists
+    // Check if product exists
     Product.findOne({ product: req.body.product })
         .then(product => {
             if (!product) {

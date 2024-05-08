@@ -23,7 +23,7 @@
       <!-- Top Nav -->
       <nav class="top-nav">
         <div class="container d-flex">
-          <p>E-Spaza</p>
+          <a href="homepage.html">E-spaza</a>
           
         </nav>
       </div>
@@ -118,7 +118,8 @@
             background-color:brown;
         }
         img {
-            max-width: 50px;
+            max-width: 95px;
+            max-height: 95px;
             height: auto;
             display: block;
             margin: 0 auto;
@@ -150,6 +151,7 @@
                     <th>Image</th>
                     <th>Name</th>
                     <th>Price</th>
+                    <th>Quantity</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -168,27 +170,36 @@
     </div>
 
     <script>
-        // Function to render cart items and calculate total price
-        function renderCart() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTable = document.getElementById('cart-table');
-            const totalPriceCell = document.getElementById('total-price');
-            cartItemsContainer.innerHTML = '';
-            let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            let totalPrice = 0;
-            cartItems.forEach(item => {
-                const cartItemRow = document.createElement('tr');
-                cartItemRow.innerHTML = `
-                    <td><img src="${item.image}" alt="${item.name}"></td>
-                    <td>${item.name}</td>
-                    <td>R${item.price}</td>
-                    <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
-                `;
-                cartItemsContainer.appendChild(cartItemRow);
-                totalPrice += item.price;
-            });
-            totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
+// Function to render cart items and calculate total price
+function renderCart() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTable = document.getElementById('cart-table');
+    const totalPriceCell = document.getElementById('total-price');
+    cartItemsContainer.innerHTML = '';
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+        if (!item.quantity) {
+            item.quantity = 1; // Default quantity to 1 if not defined
+            localStorage.setItem('cart', JSON.stringify(cartItems)); // Save updated cartItems back to localStorage
         }
+        const cartItemRow = document.createElement('tr');
+        cartItemRow.innerHTML = `
+            <td><img src="images/${item.image}" alt="${item.name}"></td>
+            <td>${item.name}</td>
+            <td>R${item.price}</td>
+            <td>
+            <select id="quantity-${item.id}" onchange="updateQuantity(${item.id})">
+                ${Array.from({length: 10}, (_, i) => `<option value="${i+1}" ${item.quantity === i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}
+            </select>
+        </td>
+            <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
+        `;
+        cartItemsContainer.appendChild(cartItemRow);
+        totalPrice += item.price * item.quantity; // Multiply price by quantity
+    });
+    totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
+}
 
         // Function to remove product from cart
         function removeFromCart(productId) {
@@ -198,13 +209,66 @@
             renderCart(); // Render updated cart
         }
 
-        // Function to handle checkout
-        function checkout() {
-            alert('We have received your order!');
-        }
+// Function to handle checkout
+function checkout() {
+    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Generate a unique cart ID
+    let cartId = Date.now().toString();
+
+    // Create a new array that only includes the 'product', 'price', 'quantity', and 'cartId' fields
+    let cartItemsToLog = cartItems.map(item => {
+        delete item.image;
+        delete item.id;
+        return {
+            product: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            cartId: cartId
+        };
+    });
+
+    console.log(JSON.stringify(cartItemsToLog, null, 2)); // Log cart details
+
+    // Make a POST request to '/placeOrder' for each item in the cart
+    cartItems.forEach(item => {
+        fetch('/placeOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                product: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                cartId: cartId
+            }),
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+
+    alert('We have received your order!');
+}
 
         // Initialize the page
         renderCart();
+
+      // Function to update quantity of a product in the cart
+      function updateQuantity(productId) {
+          let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+          let quantitySelect = document.getElementById('quantity-' + productId);
+          let newQuantity = parseInt(quantitySelect.value, 10);
+          let itemToUpdate = cartItems.find(item => item.id === productId);
+          if (itemToUpdate) {
+              itemToUpdate.quantity = newQuantity;
+              localStorage.setItem('cart', JSON.stringify(cartItems)); // Save updated cartItems back to localStorage
+              renderCart();
+          }
+      }
     </script>
 </body>
 <footer class="footer">
@@ -222,6 +286,13 @@
       <a href="">Customer Services</a>
       <a href="">Promotion</a>
       <a href="">Top Brands</a>
+    </div>
+    <div class="col d-flex">
+      <h4>Dashboards</h4>
+      <a href="custOrderDashboard.html">Your Orders</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="orderDashboard.html">Order Dashboard</a>
+      <a href="orderManagement.html">Order Management</a>
     </div>
     <div class="col d-flex">
       <span><i class='bx bxl-facebook-square'></i></span>
