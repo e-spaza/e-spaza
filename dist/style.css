@@ -1175,6 +1175,11 @@ Hero Media Query
   background-color: var(--brown);
 }
 
+#orderStatus {
+  margin-right: 40px; /* Adjust this value as needed */
+  color: white;
+}
+
 footer .row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
