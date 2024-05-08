@@ -127,7 +127,47 @@ form.addEventListener('submit', function(event) {
         console.error('There was a problem with your fetch operation:', error);
     });
 });
-</script>
 
+// Select the remove access form and add event listener
+const removeAccessForm = document.querySelector('.access-sectionOnboard form');
+removeAccessForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(removeAccessForm);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    fetch('/remove-access', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.error('There was a problem with your fetch operation:', error));
+});
+
+// Select the change role form and add event listener
+const changeRoleForm = document.querySelector('.permissions-sectionOnboard form');
+changeRoleForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(changeRoleForm);
+    const data = {};
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+    fetch('/change-role', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.error('There was a problem with your fetch operation:', error));
+});
 </script>
 </html>
