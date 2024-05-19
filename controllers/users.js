@@ -42,7 +42,20 @@ usersRouter.post('/login', (req, res) => {
         });
 });
 
-module.exports = usersRouter
+// Route for removing access
+usersRouter.post('/remove-access', (req, res) => {
+    User.findOneAndDelete({ name: req.body.name})
+        .then(result => {
+            if (result) {
+                res.status(200).json(result);
+            } else {
+                res.status(400).send('User not found');
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});
 
 // Route for changing role
 usersRouter.post('/change-role', (req, res) => {
@@ -59,17 +72,4 @@ usersRouter.post('/change-role', (req, res) => {
         });
 });
 
-// Route for removing access
-usersRouter.post('/remove-access', (req, res) => {
-    User.findOneAndDelete({ name: req.body.name, role: req.body.role })
-        .then(result => {
-            if (result) {
-                res.status(200).json(result);
-            } else {
-                res.status(400).send('User not found');
-            }
-        })
-        .catch(err => {
-            res.status(500).send('Server error');
-        });
-});
+module.exports = usersRouter
