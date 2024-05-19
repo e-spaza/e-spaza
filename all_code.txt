@@ -1,0 +1,523 @@
+File: ./app.js
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const mongoose = require('mongoose');
+const config = require('./utils/config')
+const usersRouter = require('./controllers/users')
+const orderRouter = require('./controllers/order');
+const productRouter = require('./controllers/product');
+const reportRouter = require('./controllers/report');
+
+
+app.use(express.static('dist'));
+app.use(cors());
+app.use(express.json());
+app.use('/',usersRouter);
+app.use('/', orderRouter);
+app.use('/', productRouter);
+app.use('/', reportRouter);
+
+mongoose.connect(config.uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB Atlas'))
+    .catch(err => console.error('Could not connect to MongoDB Atlas', err));
+
+module.exports = appFile: ./models/product.js
+const mongoose = require('mongoose')
+
+const productSchema = new mongoose.Schema({
+    id: String,
+    availability: String,
+    price: Number,
+    product: String,
+    quantity: Number
+
+})
+
+const Product = mongoose.model('Product', productSchema)
+
+module.exports = ProductFile: ./models/user.js
+const mongoose = require('mongoose')
+
+const userSchema = new mongoose.Schema({
+    id: String,
+    name: String,
+    surname: String,
+    email: String,
+    role: String
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User
+File: ./models/order.js
+const mongoose = require('mongoose')
+
+const orderSchema = new mongoose.Schema({
+    product: String,
+    price: Number,
+    quantity: Number,
+    cartId: String,
+    //order_id: String,
+    //user_id: String,
+    //products: Array,
+    //total_price: Number,
+    //order_date: Date,
+    //status: String,
+    //availability: String
+}, { versionKey: false });
+
+const Order = mongoose.model('Order', orderSchema)
+
+module.exports = OrderFile: ./dist/script.js
+
+const container = document.getElementById('container');
+const registerBtn = document.getElementById('register');
+const loginBtn = document.getElementById('login');
+
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
+
+loginBtn.addEventListener('click', () => {
+    container.classList.remove("active");
+});
+
+function decodeJwtResponse(token) {
+        let base64Url = token.split('.')[1]
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload)
+    }
+    let responsePayload;
+    window.handleCredentialResponse = (response) => {
+  // decodeJwtResponse() is a custom function defined by you
+  // to decode the credential response.
+  responsePayload = decodeJwtResponse(response.credential);
+
+  console.log("ID: " + responsePayload.sub);
+  console.log('Full Name: ' + responsePayload.name);
+  console.log('Given Name: ' + responsePayload.given_name);
+  console.log('Family Name: ' + responsePayload.family_name);
+  console.log("Image URL: " + responsePayload.picture);
+  console.log("Email: " + responsePayload.email);
+}
+File: ./dist/reports.js
+// ./dist/reports.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchStockData();
+    fetchOrderData();
+
+    document.getElementById('export-btn').addEventListener('click', exportPDF);
+});
+
+function fetchStockData() {
+    fetch('/api/stock')
+        .then(response => response.json())
+        .then(data => {
+            const stockBody = document.getElementById('stock-body');
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.product}</td>
+                    <td>${item.availability}</td>
+                    <td>${item.price}</td>
+                    <td>${item.quantity}</td>
+                `;
+                stockBody.appendChild(row);
+            });
+        })
+        .catch(err => console.error('Error fetching stock data:', err));
+}
+
+function fetchOrderData() {
+    fetch('/api/orders')
+        .then(response => response.json())
+        .then(data => {
+            const orderBody = document.getElementById('order-body');
+            data.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.product}</td>
+                    <td>${order.price}</td>
+                    <td>${order.quantity}</td>
+                    <td>${order.cartId}</td>
+                `;
+                orderBody.appendChild(row);
+            });
+        })
+        .catch(err => console.error('Error fetching order data:', err));
+}
+
+function exportPDF() {
+    const element = document.querySelector('.container');
+    html2pdf().from(element).save('report.pdf');
+}
+File: ./dist/slider.js
+// Hero Carousel
+const slider1 = document.querySelector('#glide_1');
+if (slider1) {
+  new Glide(slider1, {
+    type: 'carousel',
+    startAt: 0,
+    // autoplay: 3000,
+    gap: 0,
+    hoverpause: true,
+    perView: 1,
+    animationDuration: 800,
+    animationTimingFunc: 'linear',
+  }).mount();
+}File: ./dist/index.js
+
+const hamburer = document.querySelector(".hamburger");
+const navList = document.querySelector(".nav-list");
+
+if (hamburer) {
+  hamburer.addEventListener("click", () => {
+    navList.classList.toggle("open");
+  });
+}
+
+// Popup
+const popup = document.querySelector(".popup");
+const closePopup = document.querySelector(".popup-close");
+
+if (popup) {
+  closePopup.addEventListener("click", () => {
+    popup.classList.add("hide-popup");
+  });
+}
+
+// Get the search form
+const searchForm = document.querySelector('#searchForm');
+
+// Add an event listener to the form
+searchForm.addEventListener('submit', (event) => {
+  // Prevent the form from submitting normally
+  event.preventDefault();
+
+  // Get the product name from the search input
+  let selectedProduct = document.querySelector('.search-input').value;
+
+  // Send a POST request to the '/homepage' route with the selected product's name
+  fetch('/homepage', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ product: selectedProduct }),
+  })
+  .then(response => response.json())
+.then(data => {
+  // Update the popup with the product details
+  document.querySelector('.popup-img').src = `images/${data.product.toLowerCase()}.jpg`;
+  document.querySelector('.product-name').textContent = data.product;
+  document.querySelector('.product-price').textContent = `R${data.price}`;
+  document.querySelector('.product-availability').textContent = `Available at: ${data.availability}`;
+  
+
+  // Show the popup
+  popup.classList.remove("hide-popup");
+})
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+});
+
+
+function decodeJwtResponse(token) {
+  let base64Url = token.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  return JSON.parse(jsonPayload)
+}
+let responsePayload;
+window.handleCredentialResponse = (response) => {
+// decodeJwtResponse() is a custom function Sign Updefined by you
+// to decode the credential response.
+responsePayload = decodeJwtResponse(response.credential);
+
+console.log("ID: " + responsePayload.sub);
+console.log('Given Name: ' + responsePayload.given_name);
+console.log('Family Name: ' + responsePayload.family_name);
+console.log("Email: " + responsePayload.email);
+let radios = document.getElementsByName('user-type');
+
+// Iterate over the radio buttons
+let usertype = "";
+for(let i = 0; i < radios.length; i++) {
+    // If the radio button is selected
+    if(radios[i].checked) {
+        // Log its value
+        console.log(radios[i].value);
+        usertype = radios[i].value;
+        break;
+    }
+}
+
+// Send the signup response to the server and handle 409 error for user already exists
+fetch('/signup', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    id: responsePayload.sub,
+    name: responsePayload.given_name,
+    surname: responsePayload.family_name,
+    email: responsePayload.email,
+    role: usertype,
+  }),
+})
+  .then((res) => {
+    if (res.status === 400) {
+      alert('User already exists');
+    } else if (res.status === 201) {
+      alert('User created successfully');
+      window.location.href = 'homepage.html';
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
+
+window.handleCredentialResponseLogin = (response) => {
+  // decodeJwtResponse() is a custom function defined by you
+  // to decode the credential response.
+  responsePayload = decodeJwtResponse(response.credential);
+  
+  console.log("ID: " + responsePayload.sub);
+  console.log('Given Name: ' + responsePayload.given_name);
+  console.log('Family Name: ' + responsePayload.family_name);
+  console.log("Email: " + responsePayload.email);
+  // Get all radio buttons with the name 'user-type'
+let radios = document.getElementsByName('user-type');
+
+// Iterate over the radio buttons
+let usertype = "";
+for(let i = 0; i < radios.length; i++) {
+    // If the radio button is selected
+    if(radios[i].checked) {
+        // Log its value
+        console.log(radios[i].value);
+        usertype = radios[i].value;
+        break;
+    }
+}
+  
+  // Send the login to the server and handle user not found error
+  fetch('/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: responsePayload.sub,
+      name: responsePayload.given_name,
+      surname: responsePayload.family_name,
+      email: responsePayload.email,
+      role: usertype,
+    }),
+  })
+    .then((res) => {
+      if (res.status === 400) {
+        alert('User not found');
+      } else if (res.status === 200) {
+        return res.json();
+    }
+    })
+    .then(user => {
+      console.log(user);
+
+        alert('User logged in successfully');
+        //window.location.href = 'homepage.html';
+        if (user.role === "store-owner")
+        {
+          window.location.href = 'onboarding.html';
+        }else if (user.role === "customer")
+        {
+          window.location.href = 'homepage.html';
+        }else
+        {
+          window.location.href = 'orderDashboard.html';
+        }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+  File: ./utils/config.js
+require('dotenv').config()
+
+const port = process.env.port
+const uri = process.env.uri
+console.log(port, uri)
+
+module.exports ={
+    uri,
+    port
+}File: ./controllers/report.js
+File: ./controllers/product.js
+const productRouter = require('express').Router();
+const Product = require('../models/product');
+
+// Route for retrieving products
+productRouter.post('/homepage', (req, res) => {
+    Product.findOne({ product: req.body.product })
+        .then(product => {
+            if (!product) {
+                res.status(400).send('Product does not exist');
+            } else {
+                res.status(200).json(product);
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});
+
+// Route for adding new product
+productRouter.post('/addProduct', (req, res) => {
+    const newProduct = new Product({
+        product: req.body.product,
+        id: req.body.sku,
+        quantity: req.body.quantity,
+        price: req.body.price.selling,
+        availability: 'In Stock'
+    });
+
+    newProduct.save()
+        .then(() => res.status(201).json('Product added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Route for retrieving all products
+productRouter.get('/products', (req, res) => {
+    Product.find()
+        .then(products => res.json(products))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+module.exports = productRouter;
+File: ./controllers/order.js
+const orderRouter = require('express').Router();
+const Order = require('../models/order');
+
+// Route for placing an order
+orderRouter.post('/placeOrder', (req, res) => {
+    const newOrder = new Order({
+        product: req.body.product,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        cartId: req.body.cartId,
+        status: 'Pending'
+    });
+
+    newOrder.save()
+        .then(() => res.json('Order placed!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Route for fulfilling an order
+orderRouter.post('/fulfillOrder', (req, res) => {
+    Order.findByIdAndUpdate(req.body.orderId, { status: 'Fulfilled' })
+        .then(() => res.json('Order fulfilled!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Route for retrieving all orders
+orderRouter.get('/orders', (req, res) => {
+    Order.find()
+        .then(orders => res.json(orders))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+module.exports = orderRouter;
+File: ./controllers/users.js
+const usersRouter = require('express').Router()
+const User = require("../models/user")
+
+usersRouter.post('/signup', (req, res) => {
+    // Check if user already exists
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if (user) {
+                res.status(400).send('User already exists');
+            } else {
+                // If user does not exist, save new user
+                const newUser = new User(req.body);
+                newUser
+                    .save()
+                    .then(result => {
+                        res.status(201).json(result);
+                    })
+                    .catch(err => {
+                        res.status(500).send('Server error');
+                    });
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});
+
+//route for user login post, send an error if user does not exist
+usersRouter.post('/login', (req, res) => {
+    // Check if user exists
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if (!user) {
+                res.status(400).send('User does not exist');
+            } else {
+                // Send a response with the user details
+                res.status(200).json(user);
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});
+
+module.exports = usersRouter
+
+// Route for changing role
+usersRouter.post('/change-role', (req, res) => {
+    User.findOneAndUpdate({ name: req.body.name, role: req.body.oldRole }, { role: req.body.newRole })
+        .then(result => {
+            if (result) {
+                res.status(200).json(result);
+            } else {
+                res.status(400).send('User not found');
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});
+
+// Route for removing access
+usersRouter.post('/remove-access', (req, res) => {
+    User.findOneAndDelete({ name: req.body.name, role: req.body.role })
+        .then(result => {
+            if (result) {
+                res.status(200).json(result);
+            } else {
+                res.status(400).send('User not found');
+            }
+        })
+        .catch(err => {
+            res.status(500).send('Server error');
+        });
+});File: ./index.js
+const config = require('./utils/config')
+const app = require('./app')
+
+app.listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
+});
