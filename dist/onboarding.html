@@ -1,169 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-    <!-- Boxicons -->
-    <link
-      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <!-- Glide js -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
-    <!-- Custom StyleSheet -->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
     <title>Onboarding</title>
 </head>
 <body>
-    <body>
-        <nav class="navbarOnboard">
-            <a href="homepage.html" class="nav-linkOnboard nav-title">E-spaza</a>
-            <div class="nav-links">
-                <a href="orderManagement.html" class="nav-linkOnboard">Order Management</a>
-                <a href="orderDashboard.html" class="nav-linkOnboard">Order Dashboard</a>
-            </div>
-        </nav>
-        <div class="containerOnboard">
-            <div class="columnOnboard column-1Onboard"></div>
-            <div class="columnOnboard column-4Onboard">
-                <form class="onboard-form">
-                    <input type="text" name="name" placeholder="Full Name" class="inputOnboard" required>
-                    <input type="email" name="email" placeholder="Email" class="inputOnboard" required>
-                    <input type="text" name="role" placeholder="Role" class="inputOnboard" required>
-                    <button type="submit" class="submit-button">Submit</button>
-                </form>
-                <div class="access-sectionOnboard">
-                    <h2>Remove User</h2>
+    <nav class="navbarOnboard">
+        <a href="homepage.html" class="nav-linkOnboard nav-title">E-spaza</a>
+        <div class="nav-links">
+            <a href="orderManagement.html" class="nav-linkOnboard">Order Management</a>
+            <a href="orderDashboard.html" class="nav-linkOnboard">Order Dashboard</a>
+        </div>
+    </nav>
+    <div class="containerOnboard">
+        <div class="columnOnboard column-1Onboard"></div>
+        <div class="columnOnboard column-4Onboard">
+            <form class="onboard-form">
+                <input type="text" name="name" placeholder="Full Name" class="inputOnboard" required>
+                <input type="email" name="email" placeholder="Email" class="inputOnboard" required>
+                <input type="text" name="role" placeholder="Role" class="inputOnboard" required>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+            <div class="access-sectionOnboard">
+                <h2>Remove User</h2>
+                <form class="remove-access-formOnboard">
                     <div class="entryOnboard">
                         <div class="entry-nameOnboard">
-                            <label for="nameSearch" class="nameOnboard">Full Name</label>
-                            <input type="search" id="nameSearch" name="nameSearch" class="nameOnboard">
+                            <label for="emailSearch" class="nameOnboard">Email</label>
+                            <input type="email" id="emailSearch" name="email" class="nameOnboard" required>
                         </div>
-                        <button class="remove-accessOnboard">Remove</button>
+                        <button class="remove-accessOnboard" type="submit">Remove</button>
                     </div>
-                </div>
-                
-                <div class="permissions-sectionOnboard">
-                    <h2>Change Permissions</h2>
+                </form>
+            </div>
+            
+            <div class="permissions-sectionOnboard">
+                <h2>Change Permissions</h2>
+                <form class="change-role-formOnboard">
                     <div class="entryOnboard">
                         <div class="entry-nameOnboard">
-                            <label for="nameSearch2" class="nameOnboard">Full Name</label>
-                            <input type="search" id="nameSearch2" name="nameSearch2" class="nameOnboard">
-                
-                            <label for="roleSearch2" class="roleOnboard">Role</label>
-                            <input type="search" id="roleSearch2" name="roleSearch2" class="roleOnboard">
+                            <label for="emailChange" class="nameOnboard">Email</label>
+                            <input type="email" id="emailChange" name="email" class="nameOnboard" required>
+                            
+                            <label for="roleSearch2" class="roleOnboard">Old Role</label>
+                            <input type="text" id="roleSearch2" name="oldRole" class="roleOnboard" required>
                         </div>
                         <div class="permissionsOnboard">
-                            <label for="permissionsOnboard">Permissions:</label>
-                            <select id="permissionsOnboard">
-                                <option value="1">Staff</option>
-                                <option value="2">Manager</option>
-                                <option value="3">Owner</option>
+                            <label for="permissionsOnboard">New Role</label>
+                            <select id="permissionsOnboard" name="newRole" required>
+                                <option value="Staff">Staff</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Owner">Owner</option>
                             </select>
                         </div>
-                        <button class="save-changesOnboard">Save Changes</button>
+                        <button class="save-changesOnboard" type="submit">Save Changes</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    </body>
-    <!-- Custom Script -->
+        </div>
+    </div>
     <script src="index.js"></script>
+    <script>
+        document.querySelector('.onboard-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            fetch('/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(json => {
+                alert('Staff user has been onboarded successfully');
+                console.log(json);
+                this.reset();
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                alert(error.message);
+            });
+        });
+
+        document.querySelector('.remove-access-formOnboard').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            fetch('/remove-access', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(json => {
+                alert('User has been removed successfully');
+                console.log(json);
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                alert(error.message);
+            });
+        });
+
+        document.querySelector('.change-role-formOnboard').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            fetch('/change-role', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(json => {
+                alert('User role has been changed successfully');
+                console.log(json);
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+                alert(error.message);
+            });
+        });
+        </script>
 </body>
-<script>
-    // Select the form element
-const form = document.querySelector('.onboard-form');
-//make form text to be black
-form.style.color = 'black';
-
-// Add an event listener to the form submit event
-form.addEventListener('submit', function(event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-
-    // Get the form data
-    const formData = new FormData(form);
-
-    // Convert formData to JSON object
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-    console.log(data)
-    // Send the data to the server using fetch
-    fetch('/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => {
-        // Check if the response is ok
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        //send an alert to the user
-        alert('Staff user has been onboarded successfully');
-        //erase the data in the form
-        form.reset();
-        // If the response is ok, return the JSON response
-        return response.json();
-    })
-    .then(json => {
-        // Log the JSON response
-        console.log(json);
-        // Optionally, you can handle the response here
-    })
-    .catch(error => {
-        // Log any errors
-        console.error('There was a problem with your fetch operation:', error);
-    });
-});
-
-// Select the remove access form and add event listener
-const removeAccessForm = document.querySelector('.access-sectionOnboard form');
-removeAccessForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(removeAccessForm);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-    fetch('/remove-access', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(error => console.error('There was a problem with your fetch operation:', error));
-});
-
-// Select the change role form and add event listener
-const changeRoleForm = document.querySelector('.permissions-sectionOnboard form');
-changeRoleForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(changeRoleForm);
-    const data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-    fetch('/change-role', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(error => console.error('There was a problem with your fetch operation:', error));
-});
-</script>
 </html>
