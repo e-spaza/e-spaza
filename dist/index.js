@@ -1,4 +1,3 @@
-
 const hamburer = document.querySelector(".hamburger");
 const navList = document.querySelector(".nav-list");
 
@@ -38,22 +37,50 @@ searchForm.addEventListener('submit', (event) => {
     body: JSON.stringify({ product: selectedProduct }),
   })
   .then(response => response.json())
-.then(data => {
-  // Update the popup with the product details
-  document.querySelector('.popup-img').src = `images/${data.product.toLowerCase()}.jpg`;
-  document.querySelector('.product-name').textContent = data.product;
-  document.querySelector('.product-price').textContent = `R${data.price}`;
-  document.querySelector('.product-availability').textContent = `Available at: ${data.availability}`;
+  .then(data => {
+    // Update the popup with the product details
+    document.querySelector('.popup-img').src = `images/${data.product.toLowerCase()}.jpg`;
+    document.querySelector('.product-name').textContent = data.product;
+    document.querySelector('.product-price').textContent = `R${data.price}`;
+    document.querySelector('.product-availability').textContent = `Available at: ${data.availability}`;
   
-
-  // Show the popup
-  popup.classList.remove("hide-popup");
-})
+    // Show the popup
+    popup.classList.remove("hide-popup");
+  })
   .catch((error) => {
     console.error('Error:', error);
   });
 });
 
+// Role-based access control
+const roleAccess = {
+  'Customer': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'cart.html', 'custOrderDashboard.html'],
+  'Staff': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'cart.html', 'orderDashboard.html'],
+  'Owner': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'orderManagement.html', 'cart.html', 'onboarding.html', 'orderManagement.html', 'orderDashboard.html'],
+  'Manager': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'orderManagement.html', 'orderDashboard.html' , 'cart.html', 'onboarding.html']
+};
+
+document.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', function(event) {
+    const userRole = localStorage.getItem('userRole');
+    const href = this.getAttribute('href');
+
+    console.log('User Role:', userRole);  // Debug log for user role
+    console.log('Target Href:', href);   // Debug log for target href
+
+    // Allow navigation to About, FAQ, Contact pages
+    if (href.startsWith('#')) {
+      return;
+    }
+
+    if (userRole && roleAccess[userRole].includes(href)) {
+      return;
+    } else {
+      event.preventDefault();
+      alert('You do not have access to this page.');
+    }
+  });
+});
 
 function decodeJwtResponse(token) {
   let base64Url = token.split('.')[1]
@@ -179,4 +206,3 @@ for(let i = 0; i < radios.length; i++) {
       console.log(err);
     });
 }
-  

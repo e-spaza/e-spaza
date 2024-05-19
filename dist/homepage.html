@@ -487,95 +487,61 @@
   </div>
 </div>
 
-<script>
-      // Function to add product to cart
-      function addToCart(product) {
-      let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-      product.quantity = 1; // Add quantity property to product
-      product.price = Number(product.price.replace('R', '')); // Convert price to number
-      cartItems.push(product); // Add the product to cart
-      localStorage.setItem('cart', JSON.stringify(cartItems));
-      alert(`Added ${product.name} to cart!`);
-      }
-
-      // Add event listener to "Add to Cart" button
-      document.querySelector('.add-to-cart').addEventListener('click', function() {
-        // Get product details from HTML elements
-        const name = document.querySelector('.product-name').textContent;
-        const price = document.querySelector('.product-price').textContent.slice(1);
-        const availability = document.querySelector('.product-availability').textContent;
-        const image = name.toLowerCase() + '.jpg'; // Just the product name in lowercase
-
-        // Create product object
-        const product = {
-          name: name,
-          price: price,
-          availability: availability,
-          image: image
-        };
-
-        addToCart(product);
-      });
-</script>
-
-    <script>
-      document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // prevent the form from submitting normally
-      
-        var product = document.querySelector('input[name="product"]').value;
-      
-        fetch('/homepage', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ product: product }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          // handle the JSON response here
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      });
-      </script>
-    <!-- <script>
-      document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // prevent the form from submitting normally
-
-        var product = document.querySelector('input[name="product"]').value;
-
-        fetch('/homepage', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ product: product }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          // handle the JSON response here
-          var productPopup = document.getElementById('productPopup');
-          productPopup.textContent = JSON.stringify(data);
-          productPopup.style.display = 'block'; // show the popup
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-      });
-
-      // hide the popup when the user clicks outside of it
-      window.addEventListener('click', function(event) {
-        var productPopup = document.getElementById('productPopup');
-        if (event.target != productPopup && event.target != document.querySelector('input[name="product"]')) {
-          productPopup.style.display = 'none';
+  <script>
+        // Function to add product to cart
+        function addToCart(product) {
+        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        product.quantity = 1; // Add quantity property to product
+        product.price = Number(product.price.replace('R', '')); // Convert price to number
+        cartItems.push(product); // Add the product to cart
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+        alert(`Added ${product.name} to cart!`);
         }
+
+        // Add event listener to "Add to Cart" button
+        document.querySelector('.add-to-cart').addEventListener('click', function() {
+          // Get product details from HTML elements
+          const name = document.querySelector('.product-name').textContent;
+          const price = document.querySelector('.product-price').textContent.slice(1);
+          const availability = document.querySelector('.product-availability').textContent;
+          const image = name.toLowerCase() + '.jpg'; // Just the product name in lowercase
+
+          // Create product object
+          const product = {
+            name: name,
+            price: price,
+            availability: availability,
+            image: image
+          };
+
+          addToCart(product);
+        });
+  </script>
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // prevent the form from submitting normally
+
+      var product = document.querySelector('input[name="product"]').value;
+
+      fetch('/homepage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product: product }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // handle the JSON response here
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
       });
-      </script> -->
-  </body>
+    });
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
   <script src="slider.js"></script>
   <script src="index.js"></script>
+</body>
 </html>

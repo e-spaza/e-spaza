@@ -16,7 +16,6 @@
     <!-- Navigation -->
     <div class="top-nav">
       <div class="container d-flex">
-        
         <ul class="d-flex">
           <li><a href="#">About Us</a></li>
           <li><a href="#">FAQ</a></li>
@@ -27,97 +26,43 @@
     <div class="navigation">
       <div class="nav-center container d-flex">
         <a href="homepage.html" class="logo"><h1>E-Spaza</h1></a>
-
         <ul class="nav-list d-flex">
-          <li class="nav-item">
-            <a href="homepage.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="product.html" class="nav-link">Shop</a>
-          </li>
-          <li class="nav-item">
-            <a href="#terms" class="nav-link">Terms</a>
-          </li>
-          <li class="nav-item">
-            <a href="#about" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="#contact" class="nav-link">Contact</a>
-          </li>
+          <li class="nav-item"><a href="homepage.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="product.html" class="nav-link">Shop</a></li>
+          <li class="nav-item"><a href="#terms" class="nav-link">Terms</a></li>
+          <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
           <li class="icons d-flex">
-            <a href="login.html" class="icon">
-              <i class="bx bx-user"></i>
-            </a>
-            <div class="icon">
-              <i class="bx bx-search"></i>
-            </div>
-            <div class="icon">
-              <i class="bx bx-heart"></i>
-              <span class="d-flex">0</span>
-            </div>
-            <a href="cart.html" class="icon">
-              <i class="bx bx-cart"></i>
-              <span class="d-flex">0</span>
-            </a>
+            <a href="login.html" class="icon"><i class="bx bx-user"></i></a>
+            <div class="icon"><i class="bx bx-search"></i></div>
+            <div class="icon"><i class="bx bx-heart"></i><span class="d-flex">0</span></div>
+            <a href="cart.html" class="icon"><i class="bx bx-cart"></i><span class="d-flex">0</span></a>
           </li>
         </ul>
-
         <div class="icons d-flex">
-          <a href="login.html" class="icon">
-            <i class="bx bx-user"></i>
-          </a>
-          <div class="icon">
-            <i class="bx bx-search"></i>
-          </div>
-          <div class="icon">
-            <i class="bx bx-heart"></i>
-            <span class="d-flex">0</span>
-          </div>
-          <a href="cart.html" class="icon">
-            <i class="bx bx-cart"></i>
-            <span class="d-flex">0</span>
-          </a>
+          <a href="login.html" class="icon"><i class="bx bx-user"></i></a>
+          <div class="icon"><i class="bx bx-search"></i></div>
+          <div class="icon"><i class="bx bx-heart"></i><span class="d-flex">0</span></div>
+          <a href="cart.html" class="icon"><i class="bx bx-cart"></i><span class="d-flex">0</span></a>
         </div>
-
-        <div class="hamburger">
-          <i class="bx bx-menu-alt-left"></i>
-        </div>
+        <div class="hamburger"><i class="bx bx-menu-alt-left"></i></div>
       </div>
     </div>
     <!-- Login -->
     <div class="container">
       <div class="login-form">
-        <form action="">
+        <form id="loginForm">
           <h1>Login</h1>
           <p>
             Already have an account? Login in or
             <a href="signup.html">Sign Up</a>
           </p>
-          <script src="https://accounts.google.com/gsi/client" async defer></script>
-        <div id="g_id_onload" data-client_id="485901762474-3jia7mmhrl2mogh7k3rqe4logvs0uvnu.apps.googleusercontent.com"
-          data-callback="handleCredentialResponseLogin">
-        </div>
-        <div class="g_id_signin" data-type="standard"></div>
-        <div class="user-type">
-          <label>
-            <input type="radio" name="user-type" value="customer" checked>
-            Customer
-          </label>
-          <label>
-            <input type="radio" name="user-type" value="staff">
-            Staff
-          </label>
-          <label>
-            <input type="radio" name="user-type" value="store-owner">
-            Store Owner
-          </label>
-        </div>
-
-
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <input type="submit" value="Submit">
         </form>
       </div>
     </div>
-
     <!-- Footer -->
     <footer class="footer">
       <div class="row">
@@ -144,8 +89,41 @@
         </div>
       </div>
     </footer>
-
     <!-- Custom Script -->
     <script src="index.js"></script>
+    <script>
+      document.querySelector('#loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+        fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.json();
+        })
+        .then(user => {
+          alert('Login successful');
+          // Store user's email in localStorage
+          localStorage.setItem('userEmail', user.email);
+          // Store user's role in localStorage
+          localStorage.setItem('userRole', user.role);
+          // Redirect to the homepage or user dashboard
+          window.location.href = 'homepage.html';
+        })
+        .catch(error => {
+          console.error('There was a problem with your fetch operation:', error);
+          alert(error.message);
+        });
+      });
+    </script>
   </body>
 </html>
