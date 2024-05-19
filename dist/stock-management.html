@@ -120,18 +120,41 @@ body {
     background-color: #45a049;
 }
 
+header {
+    background-color: #333;
+    padding: 10px 0;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+  nav ul li {
+    margin: 0 15px;
+  }
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
 </style>
 <body>
     <header>
         <nav>
-            <ul>
-                <li><a href="dashboard.html">Dashboard</a></li>
-                <li><a href="stock-management.html">Stock Management</a></li>
-                <li><a href="orders.html">Orders</a></li>
-                <li><a href="logout.html">Logout</a></li>
-            </ul>
+          <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="onboarding.html">Reports</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+          </ul>
         </nav>
-    </header>
+      </header>
     <main>
         <section id="order-fulfillment">
             <h2>Order Fulfillment</h2>
