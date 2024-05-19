@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management</title>
+</head>
+<style>
+    /* File: ./dist/style.css */
+
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Orders table styling */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.orders-table thead {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.orders-table th, .orders-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.orders-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.orders-table button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.orders-table button:hover {
+    background-color: #45a049;
+}
+
+/* Add stock form styling */
+#add-stock-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+#add-stock-form h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+#add-stock-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#add-stock-form input[type="text"],
+#add-stock-form input[type="number"],
+#add-stock-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#add-stock-form button {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#add-stock-form button:hover {
+    background-color: #45a049;
+}
+
+header {
+    background-color: #333;
+    padding: 10px 0;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+  nav ul li {
+    margin: 0 15px;
+  }
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+</style>
+<body>
+    <header>
+        <nav>
+          <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="onboarding.html">Reports</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+          </ul>
+        </nav>
+      </header>
+    <main>
+        <section id="order-fulfillment">
+            <h2>Order Fulfillment</h2>
+            <table id="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Items</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Orders will be populated here by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="add-stock">
+            <h2>Add New Stock</h2>
+            <form id="add-stock-form">
+                <label for="product-name">Product Name</label>
+                <input type="text" id="product-name" name="product-name" required>
+
+                <label for="sku">SKU</label>
+                <input type="text" id="sku" name="sku" required>
+
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" required>
+
+                <label for="supplier">Supplier</label>
+                <input type="text" id="supplier" name="supplier" required>
+
+                <label for="cost-price">Cost Price</label>
+                <input type="number" id="cost-price" name="cost-price" required>
+
+                <label for="selling-price">Selling Price</label>
+                <input type="number" id="selling-price" name="selling-price" required>
+
+                <button type="submit">Add Stock</button>
+            </form>
+        </section>
+    </main>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Fetch and display orders
+    fetch('/orders')
+        .then(response => response.json())
+        .then(orders => {
+            const ordersTable = document.getElementById('orders-table').getElementsByTagName('tbody')[0];
+            orders.forEach(order => {
+                const row = ordersTable.insertRow();
+                row.insertCell(0).textContent = order._id;
+                row.insertCell(1).textContent = order.customer || 'Unknown';
+                row.insertCell(2).textContent = order.product;
+                row.insertCell(3).textContent = order.quantity;
+                row.insertCell(4).textContent = order.status;
+                const actionsCell = row.insertCell(5);
+
+                const fulfillButton = document.createElement('button');
+                fulfillButton.textContent = 'Fulfill';
+                fulfillButton.addEventListener('click', () => {
+                    fetch('/fulfillOrder', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ orderId: order._id }),
+                    })
+                        .then(() => {
+                            row.cells[4].textContent = 'Fulfilled';
+                        })
+                        .catch(err => console.error('Error fulfilling order:', err));
+                });
+                actionsCell.appendChild(fulfillButton);
+            });
+        })
+        .catch(err => console.error('Error fetching orders:', err));
+
+    // Handle add stock form submission
+    const addStockForm = document.getElementById('add-stock-form');
+    addStockForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const newProduct = {
+            product: addStockForm['product-name'].value,
+            sku: addStockForm['sku'].value,
+            quantity: addStockForm['quantity'].value,
+            supplier: addStockForm['supplier'].value,
+            price: {
+                cost: addStockForm['cost-price'].value,
+                selling: addStockForm['selling-price'].value,
+            }
+        };
+
+        fetch('/addProduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProduct),
+        })
+            .then(response => response.json())
+            .then(() => {
+                alert('Product added successfully!');
+                addStockForm.reset();
+            })
+            .catch(err => console.error('Error adding product:', err));
+    });
+});
+    </script>
+</body>
+</html>
