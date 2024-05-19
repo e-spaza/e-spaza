@@ -23,4 +23,16 @@ orderRouter.post('/placeOrder', (req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// Fetch orders by user email
+orderRouter.get('/orders', async (req, res) => {
+  const userEmail = req.query.email;
+
+  try {
+    const orders = await Order.find({ email: userEmail });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching orders' });
+  }
+});
+
 module.exports = orderRouter;
