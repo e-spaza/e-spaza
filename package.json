@@ -18,25 +18,7 @@
     "mongoose": "^8.3.1",
     "supertest": "^6.3.4"
   },
-  "jest": {
-    "coverageReporters": [
-      [
-        "lcov",
-        {
-          "projectRoot": ".."
-        }
-      ]
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!axios)"
-    ],
-    "testEnvironment": "node"
-  },
-  "nyc": {
-    "reporter": [
-      "lcov"
-    ]
-  },
+
   "devDependencies": {
     "coveralls": "^3.1.1",
     "jest": "^29.7.0",
