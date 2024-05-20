@@ -5,3 +5,4 @@ module.exports = {
     collectCoverageFrom: ['src/**/*.js'],
     coverageReporters: ['lcov', 'text-summary'],
 };
+
