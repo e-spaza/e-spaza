@@ -68,19 +68,24 @@ document.querySelectorAll('a').forEach(link => {
     console.log('User Role:', userRole);  // Debug log for user role
     console.log('Target Href:', href);   // Debug log for target href
 
-    // Allow navigation to About, FAQ, Contact pages
     if (href.startsWith('#')) {
       return;
     }
 
+    // Always allow access to login and signup pages
+    if (href === 'login.html' || href === 'signup.html') {
+      return; // No action needed, allow navigation
+    }
+
     if (userRole && roleAccess[userRole].includes(href)) {
-      return;
+      return; // Role-based access control allows this page
     } else {
-      event.preventDefault();
+      event.preventDefault(); // Prevent navigation
       alert('You do not have access to this page.');
     }
   });
 });
+
 
 function decodeJwtResponse(token) {
   let base64Url = token.split('.')[1]
