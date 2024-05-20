@@ -24,13 +24,11 @@
       <!-- Top Nav -->
       <nav class="top-nav">
         <div class="container d-flex">
-          <a href="homepage.html">E-spaza</a>
-          
-        </nav>
+      </nav>
       </div>
       <div class="navigation">
         <div class="nav-center container d-flex">
-        <a href=".html" class="logo"><h1>E-Spaza</h1></a>
+        <a href="index.html" class="logo"><h1>E-Spaza</h1></a>
 
           <ul class="nav-list d-flex">
             <li class="nav-item">
@@ -70,9 +68,9 @@
             <a href="login.html" class="icon">
               <i class="bx bx-user"></i>
             </a>
-            <div class="icon">
-              <i class="bx bx-search"></i>
-            </div>
+            <form id="searchForm" class="search-bar">
+              <input type="text" name="product" placeholder="Search products here" class="search-input">
+            </form>
             <div class="icon">
               <i class="bx bx-heart"></i>
               <span class="d-flex">0</span>
@@ -147,6 +145,29 @@
        
     </div>
 
+    <!-- PopUp -->
+<div class="popup hide-popup">
+  <div class="popup-content">
+    <div class="popup-close">
+      <i class='bx bx-x'></i>
+    </div>
+    <div class="popup-left">
+      <div class="popup-img-container">
+        <!--Use the image of the particular product-->
+        <img class="popup-img" src="" alt="popup">
+      </div>
+    </div>
+    <div class="popup-right">
+      <div class="right-content">
+        <h2 class="product-name">Product Name</h2>
+        <p class="product-price">Product Price</p>
+        <p class="product-availability">Availability</p>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script>
         
         const products = [
@@ -196,6 +217,66 @@
         
         renderProducts();
     </script>
+    <script>
+      // Function to add product to cart
+      function addToCart(productId) {
+            const productToAdd = products.find(product => product.id === productId);
+            if (productToAdd) {
+                let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingProductIndex = cartItems.findIndex(item => item.id === productId);
+                if (existingProductIndex > -1) {
+                    cartItems[existingProductIndex].quantity += 1;
+                } else {
+                    cartItems.push({ ...productToAdd, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(cartItems));
+                alert(`Added ${productToAdd.name} to cart!`);
+            }
+        }
+
+      // Add event listener to "Add to Cart" button
+      document.querySelector('.add-to-cart').addEventListener('click', function() {
+        // Get product details from HTML elements
+        const name = document.querySelector('.product-name').textContent;
+        const price = document.querySelector('.product-price').textContent.slice(1);
+        const availability = document.querySelector('.product-availability').textContent;
+        const image = name.toLowerCase() + '.jpg'; // Just the product name in lowercase
+
+        // Create product object
+        const product = {
+          name: name,
+          price: price,
+          availability: availability,
+          image: image
+        };
+
+        addToCart(product);
+      });
+        </script>
+        <script>
+          document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // prevent the form from submitting normally
+          
+            var product = document.querySelector('input[name="product"]').value;
+          
+            fetch('/homepage', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ product: product }),
+            })
+            .then(response => response.json())
+            .then(data => {
+              // handle the JSON response here
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+          });
+          </script>
+          <script src="index.js"></script>
 </body>
 
 <footer class="footer">

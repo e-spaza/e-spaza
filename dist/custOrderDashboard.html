@@ -34,11 +34,8 @@
         </div>
         <div class="column2OnboardDashboard">
             <h2 class="column-headingOnboardDashboard">Order Progress</h2>
-            <div class="boxOnboardDashboard">
-                <div class="smallBoxOnboardDashboard">
-                    <span class="nameOnboardDashboard">Ordered products will show up here...</span>
-                    <div id="orderStatus" class="orderStatusOnboardDashboard">Status...</div>
-                </div>
+            <div id="ordersContainer" class="boxOnboardDashboard">
+                <!-- Orders will be dynamically inserted here -->
             </div>
         </div>
     </div>
@@ -55,5 +52,53 @@
     </div>
     <!-- Custom Script -->
     <script src="index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const userEmail = localStorage.getItem('userEmail');
+          
+          if (!userEmail) {
+            alert('User not logged in');
+            window.location.href = 'login.html';
+            return;
+          }
+          
+          fetch(`/orders?email=${userEmail}`)
+            .then(response => {
+              if (!response.ok) throw new Error('Network response was not ok');
+              return response.json();
+            })
+            .then(orders => {
+              const ordersContainer = document.getElementById('ordersContainer');
+              ordersContainer.innerHTML = '';
+              
+              // Aggregate orders by product
+              const aggregatedOrders = orders.reduce((acc, order) => {
+                if (acc[order.product]) {
+                  acc[order.product].quantity += order.quantity;
+                } else {
+                  acc[order.product] = { ...order };
+                }
+                return acc;
+              }, {});
+              
+              Object.values(aggregatedOrders).forEach(order => {
+                const orderBox = document.createElement('div');
+                orderBox.classList.add('smallBoxOnboardDashboard');
+                orderBox.innerHTML = `
+                  <span class="nameOnboardDashboard">${order.product}</span>
+                  <div class="orderStatusOnboardDashboard">
+                    <span>Quantity: ${order.quantity}</span>
+                    <span>Price: ${order.price}</span>
+                  </div>
+                `;
+                ordersContainer.appendChild(orderBox);
+              });
+            })
+            .catch(error => {
+              console.error('There was a problem with your fetch operation:', error);
+              alert(error.message);
+            });
+        });
+      </script>
 </body>
 </html>

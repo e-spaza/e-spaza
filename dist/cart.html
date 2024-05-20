@@ -170,93 +170,101 @@
     </div>
 
     <script>
-// Function to render cart items and calculate total price
-function renderCart() {
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cartTable = document.getElementById('cart-table');
-    const totalPriceCell = document.getElementById('total-price');
-    cartItemsContainer.innerHTML = '';
-    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    let totalPrice = 0;
-    cartItems.forEach(item => {
-        if (!item.quantity) {
-            item.quantity = 1; // Default quantity to 1 if not defined
-            localStorage.setItem('cart', JSON.stringify(cartItems)); // Save updated cartItems back to localStorage
-        }
-        const cartItemRow = document.createElement('tr');
-        cartItemRow.innerHTML = `
-            <td><img src="images/${item.image}" alt="${item.name}"></td>
-            <td>${item.name}</td>
-            <td>R${item.price}</td>
-            <td>
-            <select id="quantity-${item.id}" onchange="updateQuantity(${item.id})">
-                ${Array.from({length: 10}, (_, i) => `<option value="${i+1}" ${item.quantity === i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}
-            </select>
-        </td>
-            <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
-        `;
-        cartItemsContainer.appendChild(cartItemRow);
-        totalPrice += item.price * item.quantity; // Multiply price by quantity
-    });
-    totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
-}
-
-        // Function to remove product from cart
-        function removeFromCart(productId) {
+      // Function to render cart items and calculate total price
+      function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalPriceCell = document.getElementById('total-price');
+            cartItemsContainer.innerHTML = '';
             let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-            cartItems = cartItems.filter(item => item.id !== productId);
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-            renderCart(); // Render updated cart
+            let totalPrice = 0;
+            cartItems.forEach(item => {
+                if (!item.quantity) {
+                    item.quantity = 1;
+                    localStorage.setItem('cart', JSON.stringify(cartItems));
+                }
+                const cartItemRow = document.createElement('tr');
+                cartItemRow.innerHTML = `
+                    <td><img src="images/${item.image}" alt="${item.name}"></td>
+                    <td>${item.name}</td>
+                    <td>R${item.price.toFixed(2)}</td>
+                    <td>
+                        <select id="quantity-${item.id}" onchange="updateQuantity(${item.id})">
+                            ${Array.from({length: 10}, (_, i) => `<option value="${i+1}" ${item.quantity === i+1 ? 'selected' : ''}>${i+1}</option>`).join('')}
+                        </select>
+                    </td>
+                    <td><button onclick="removeFromCart(${item.id})">Remove</button></td>
+                `;
+                cartItemsContainer.appendChild(cartItemRow);
+                totalPrice += item.price * item.quantity;
+            });
+            totalPriceCell.textContent = 'R' + totalPrice.toFixed(2);
         }
-
-// Function to handle checkout
-function checkout() {
-    let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Generate a unique cart ID
-    let cartId = Date.now().toString();
-
-    // Create a new array that only includes the 'product', 'price', 'quantity', and 'cartId' fields
-    let cartItemsToLog = cartItems.map(item => {
-        delete item.image;
-        delete item.id;
-        return {
-            product: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            cartId: cartId
-        };
-    });
-
-    console.log(JSON.stringify(cartItemsToLog, null, 2)); // Log cart details
-
-    // Make a POST request to '/placeOrder' for each item in the cart
-    cartItems.forEach(item => {
-        fetch('/placeOrder', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                product: item.name,
-                price: item.price,
-                quantity: item.quantity,
-                cartId: cartId
-            }),
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    });
-
-    alert('We have received your order!');
-}
-
-        // Initialize the page
-        renderCart();
-
+  
+      // Function to remove product from cart
+      function removeFromCart(productId) {
+          let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+          cartItems = cartItems.filter(item => item.id !== productId);
+          localStorage.setItem('cart', JSON.stringify(cartItems));
+          renderCart(); // Render updated cart
+      }
+  
+      // Function to handle checkout
+      function checkout() {
+          let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+          
+          // Get user's email from localStorage
+          let userEmail = localStorage.getItem('userEmail');
+          if (!userEmail) {
+              alert('Please log in to complete your purchase.');
+              return;
+          }
+  
+          // Generate a unique cart ID
+          let cartId = Date.now().toString();
+  
+          // Create a new array that only includes the 'product', 'price', 'quantity', 'cartId', and 'email' fields
+          let cartItemsToLog = cartItems.map(item => {
+              delete item.image;
+              delete item.id;
+              return {
+                  product: item.name,
+                  price: item.price,
+                  quantity: item.quantity,
+                  cartId: cartId,
+                  email: userEmail // Include user's email in the order
+              };
+          });
+  
+          console.log(JSON.stringify(cartItemsToLog, null, 2)); // Log cart details
+  
+          // Make a POST request to '/placeOrder' for each item in the cart
+          cartItems.forEach(item => {
+              fetch('/placeOrder', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      product: item.name,
+                      price: item.price,
+                      quantity: item.quantity,
+                      cartId: cartId,
+                      email: userEmail // Include user's email in the order
+                  }),
+              })
+              .then(response => response.json())
+              .then(data => console.log(data))
+              .catch((error) => {
+                  console.error('Error:', error);
+              });
+          });
+  
+          alert('We have received your order!');
+      }
+  
+      // Initialize the page
+      renderCart();
+  
       // Function to update quantity of a product in the cart
       function updateQuantity(productId) {
           let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -269,7 +277,7 @@ function checkout() {
               renderCart();
           }
       }
-    </script>
+      </script>
 </body>
 <footer class="footer">
   <div class="row">
@@ -303,5 +311,4 @@ function checkout() {
     </div>
   </div>
 </footer>
-
 </html>

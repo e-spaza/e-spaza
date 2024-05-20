@@ -8,6 +8,7 @@ orderRouter.post('/placeOrder', (req, res) => {
     price: req.body.price,
     quantity: req.body.quantity,
     cartId: req.body.cartId,
+    email: req.body.email
     //order_id: req.body.orderId,
     //user_id: req.body.userId,
     //total_price: req.body.totalPrice,
@@ -20,6 +21,18 @@ orderRouter.post('/placeOrder', (req, res) => {
   newOrder.save()
     .then(() => res.json('Order placed!'))
     .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Fetch orders by user email
+orderRouter.get('/orders', async (req, res) => {
+  const userEmail = req.query.email;
+
+  try {
+    const orders = await Order.find({ email: userEmail });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching orders' });
+  }
 });
 
 module.exports = orderRouter;
