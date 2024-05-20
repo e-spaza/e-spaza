@@ -55,9 +55,9 @@ searchForm.addEventListener('submit', (event) => {
 // Role-based access control
 const roleAccess = {
   'Customer': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'cart.html', 'custOrderDashboard.html'],
-  'Staff': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'cart.html', 'orderDashboard.html'],
-  'Owner': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'orderManagement.html', 'cart.html', 'onboarding.html', 'orderManagement.html', 'orderDashboard.html'],
-  'Manager': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'orderManagement.html', 'orderDashboard.html' , 'cart.html', 'onboarding.html']
+  'Staff': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'cart.html', 'stock-management.html'],
+  'Owner': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'orderManagement.html', 'cart.html', 'onboarding.html', 'orderManagement.html', 'stock-management.html'],
+  'Manager': ['login.html', 'signup.html', 'index.html', 'homepage.html', 'product.html', 'orderManagement.html', 'stock-management.html' , 'cart.html', 'onboarding.html']
 };
 
 document.querySelectorAll('a').forEach(link => {
